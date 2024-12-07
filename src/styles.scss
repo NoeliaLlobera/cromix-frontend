@@ -9,6 +9,8 @@ $light: #F6F6F6;
 
 
 @import "bootstrap/scss/bootstrap";
+@import 'bootstrap-icons/font/bootstrap-icons.scss';
+
 
 :root {
   //color variables
@@ -17,3 +19,4 @@ $light: #F6F6F6;
   --text: #18020C;
   --light: #F6F6F6;
 }
+

@@ -1,5 +1,10 @@
 {
-  "app": {
-    "prova": "Això és una prova"
+  "header": {
+    "log-in": "Inicia sessió",
+    "register": "Registra't"
+  },
+  "landing": {
+    "new-collection-button": "Crea la teva pròpia col·lecció",
+    "register-button": "Crea el teu compte"
   }
 }
