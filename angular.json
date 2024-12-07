@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "cromix-frontend": {
+      "i18n": {
+        "sourceLocale": "ca-ES"
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {

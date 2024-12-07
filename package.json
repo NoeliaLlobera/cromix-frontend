@@ -19,6 +19,8 @@
     "@angular/platform-browser-dynamic": "^19.0.3",
     "@angular/router": "^19.0.3",
     "@ng-bootstrap/ng-bootstrap": "^17.0.1",
+    "@ngx-translate/core": "^16.0.3",
+    "@ngx-translate/http-loader": "^16.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "rxjs": "~7.8.0",

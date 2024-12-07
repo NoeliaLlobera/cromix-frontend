@@ -3,6 +3,11 @@ $secondary: #CFEE9E;
 $dark: #18020C;
 $light: #F6F6F6;
 
+.btn {
+  border-radius: 12px !important; /* Adjust the value as needed */
+}
+
+
 @import "bootstrap/scss/bootstrap";
 
 :root {
