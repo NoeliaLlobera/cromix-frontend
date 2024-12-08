@@ -4,7 +4,24 @@
       <img src="/logo/cromix-full-lila.webp" alt="" width="80px">
     </a>
     <div>
-      <button type="button" class="btn btn-dark me-1" routerLink="login">{{ 'header.log-in' | translate }} <i class="bi-person"></i></button>
+      @if (user?.username) {
+        <button type="button" class="btn btn-dark me-1" (click)="openModal(content)">{{ user?.username }} <i
+          class="bi-person"></i></button>
+      } @else {
+        <button type="button" class="btn btn-dark me-1" routerLink="login">{{ 'header.log-in' | translate }} <i
+          class="bi-person"></i></button>
+      }
     </div>
   </div>
 </nav>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header d-flex align-items-center">
+    <p class="fw-bold m-0"> Usuari: {{ user?.username }}</p>
+    <button type="button" class="btn-close" aria-label="tancar" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body d-flex justify-content-center">
+    <button type="button" class="btn btn-primary" (click)="logout()">{{ 'header.log-out' | translate }}</button>
+  </div>
+</ng-template>

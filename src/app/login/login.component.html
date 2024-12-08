@@ -38,7 +38,7 @@
       </div>
     }
     <div class="d-flex justify-content-center gap-4 my-5">
-      <button class="btn btn-primary">{{ 'common.buttons.cancel' | translate }}</button>
+      <button type="button" class="btn btn-primary" routerLink="">{{ 'common.buttons.cancel' | translate }}</button>
       <button type="submit" class="btn btn-secondary" [disabled]="!form.valid">{{ btnSubmitText | translate }}</button>
     </div>
 

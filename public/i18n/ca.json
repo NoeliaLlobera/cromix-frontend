@@ -6,11 +6,13 @@
       "register": "Registre"
     },
     "errors": {
-      "ER_DUP_ENTRY": "Ja existeix un usuari amb aquest correu electrònic."
+      "ER_DUP_ENTRY": "Ja existeix un usuari amb aquest correu electrònic.",
+      "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades"
     }
   },
   "header": {
     "log-in": "Inicia sessió",
+    "log-out": "Tancar sessió",
     "register": "Registra't"
   },
   "landing": {
@@ -21,6 +23,7 @@
     "errors": {
       "field-required": "Camp obligatori",
       "password-length": "La contrasenya ha de tenir un mínim de 8 caràcters.",
+      "pasword-match": "Les contrasenyes no coincideixen.",
       "username-invalid": "El nom d'usuari ha de ser una direcció de correu electrònic."
     },
     "password": "Contrasenya",

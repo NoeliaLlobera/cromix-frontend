@@ -1,15 +1,17 @@
 import {Component, inject} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IloginModel} from "./models/login.model";
 import {LoginService} from "./service/login.service";
+import {GrowlService} from "../core/services/growl.service";
 
 @Component({
   selector: 'app-login',
   imports: [
     TranslatePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -22,6 +24,7 @@ export class LoginComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly service: LoginService = inject(LoginService);
+  private readonly growlService: GrowlService = inject(GrowlService);
 
 
   constructor() {
@@ -46,11 +49,19 @@ export class LoginComponent {
       return;
     }
     const loginData: IloginModel = this.form.value;
+
     if (this.mode === 'login') {
       await this.service.login(loginData);
+      //todo redirect
     } else if (this.mode === 'register') {
-      await this.service.signup(loginData);
+      console.log(loginData);
+      if (loginData.password !== loginData.confirmPassword) {
+        this.growlService.setMessage('login.errors.pasword-match', 'danger')
+        return;
+      }
     }
-
+    await this.service.signup(loginData);
   }
+
+
 }

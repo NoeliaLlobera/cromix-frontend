@@ -3,7 +3,7 @@ import {RouterOutlet} from '@angular/router';
 import {NgbAlert, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {HeaderComponent} from "./shared/header/header.component";
-import {debounceTime, Subject, tap} from "rxjs";
+import {debounceTime, tap} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {GrowlService} from "./core/services/growl.service";
 
