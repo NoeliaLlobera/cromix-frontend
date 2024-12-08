@@ -31,8 +31,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    localStorage.removeItem('user')
-    this.auth.setUser(null);
+    this.auth.logout();
     this.modalService.dismissAll();
   }
 }

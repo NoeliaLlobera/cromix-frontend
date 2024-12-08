@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IloginModel} from "./models/login.model";
 import {LoginService} from "./service/login.service";
@@ -25,6 +25,7 @@ export class LoginComponent {
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly service: LoginService = inject(LoginService);
   private readonly growlService: GrowlService = inject(GrowlService);
+  private readonly router: Router = inject(Router);
 
 
   constructor() {
@@ -52,15 +53,14 @@ export class LoginComponent {
 
     if (this.mode === 'login') {
       await this.service.login(loginData);
-      //todo redirect
     } else if (this.mode === 'register') {
-      console.log(loginData);
       if (loginData.password !== loginData.confirmPassword) {
         this.growlService.setMessage('login.errors.pasword-match', 'danger')
         return;
       }
+    } else {
+      await this.service.signup(loginData);
     }
-    await this.service.signup(loginData);
   }
 
 
