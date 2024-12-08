@@ -1,11 +1,6 @@
 <div class="container">
   <div class="row my-4">
-    <div class="col-6 d-flex justify-content-center">
-      <div class="position-relative" style="height: 35vw; width: 35vw">
-        <img class="blurred-image" ngSrc="img/taula-cromos.jpg" alt="" fill>
-      </div>
-    </div>
-    <div class="col-6 d-flex flex-column align-items-center justify-content-center">
+    <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
       <div class="d-flex flex-column align-items-center">
         <h1>Lorem ipsum dolor.</h1>
         <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur dolorum eaque enim
@@ -14,10 +9,14 @@
           voluptatem?</p>
       </div>
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-secondary">{{'landing.register-button' | translate}}</button>
+        <button type="button" class="btn btn-secondary" [routerLink]="'signup'">{{'landing.register-button' | translate}}</button>
       </div>
     </div>
-
+    <div class="col-md-6 d-flex justify-content-center my-4">
+      <div class="position-relative" style="height: 35vw; width: 35vw">
+        <img class="blurred-image" ngSrc="img/taula-cromos.jpg" alt="" fill>
+      </div>
+    </div>
   </div>
   <div class="row bg-dark rounded-4 p-5 gap-3 my-4">
     <div class="text-center text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam aut
@@ -26,7 +25,7 @@
       totam, vel?
     </div>
     <div class="d-flex justify-content-center">
-      <button type="button" class="btn btn-primary"> {{ 'landing.new-collection-button' | translate }}</button>
+      <button type="button" class="btn btn-primary" [routerLink]="'signup'"> {{ 'landing.new-collection-button' | translate }}</button>
     </div>
   </div>
 

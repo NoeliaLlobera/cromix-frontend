@@ -7,13 +7,17 @@ export const routes: Routes = [
     component: LandingComponent,
     title: 'Landing',
     data: {}
+  },
+  {
+    path: 'login',
+    title: 'login.title',
+    loadComponent: () => import('./login/login.component').then(c => c.LoginComponent)
+  },
+  {
+    path: 'signup',
+    title: 'signup.title',
+    loadComponent: () => import('./login/login.component').then(c => c.LoginComponent)
   }
 ];
 
 
-// const routes: Routes = [
-//   {
-//     path: 'lazy',
-//     loadComponent: () => import('./lazy.component').then(c => c.LazyComponent)
-//   }
-// ];
