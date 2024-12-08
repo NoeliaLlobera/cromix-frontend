@@ -58,7 +58,6 @@ export class LoginComponent {
         this.growlService.setMessage('login.errors.pasword-match', 'danger')
         return;
       }
-    } else {
       await this.service.signup(loginData);
     }
   }
