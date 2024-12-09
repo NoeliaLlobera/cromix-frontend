@@ -1,0 +1,38 @@
+{
+  "common": {
+    "buttons": {
+      "cancel": "Cancel·lar",
+      "login": "Iniciar sessió",
+      "register": "Registre"
+    },
+    "errors": {
+      "ER_DUP_ENTRY": "Ja existeix un usuari amb aquest correu electrònic.",
+      "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades"
+    }
+  },
+  "header": {
+    "log-in": "Inicia sessió",
+    "log-out": "Tancar sessió",
+    "register": "Registra't"
+  },
+  "landing": {
+    "new-collection-button": "Crea la teva pròpia col·lecció",
+    "register-button": "Crea el teu compte"
+  },
+  "login": {
+    "errors": {
+      "field-required": "Camp obligatori",
+      "password-length": "La contrasenya ha de tenir un mínim de 8 caràcters.",
+      "pasword-match": "Les contrasenyes no coincideixen.",
+      "username-invalid": "El nom d'usuari ha de ser una direcció de correu electrònic."
+    },
+    "password": "Contrasenya",
+    "password-confirm": "Confirmar contrasenya",
+    "success": "Usuari creat correctament",
+    "title": "Inicia sessió",
+    "username": "Correu electrònic"
+  },
+  "signup": {
+    "title": "Crea el teu compte"
+  }
+}
