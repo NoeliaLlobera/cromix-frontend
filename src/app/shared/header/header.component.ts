@@ -18,10 +18,13 @@ export class HeaderComponent {
   private readonly auth: AuthService = inject(AuthService);
   private modalService: NgbModal = inject(NgbModal);
   user: UserDTO | null = null;
+  startPage!: string;
 
   constructor() {
+    this.startPage = '';
     this.auth.user$().subscribe(user => {
       this.user = user;
+      this.startPage = 'home';
     });
     this.auth.startSession();
   }
@@ -32,6 +35,7 @@ export class HeaderComponent {
 
   logout() {
     this.auth.logout();
+    this.startPage = '';
     this.modalService.dismissAll();
   }
 }
