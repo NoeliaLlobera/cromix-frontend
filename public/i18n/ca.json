@@ -2,6 +2,7 @@
   "common": {
     "buttons": {
       "cancel": "Cancel·lar",
+      "edit": "Editar",
       "login": "Iniciar sessió",
       "register": "Registre"
     },
@@ -10,10 +11,28 @@
       "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades"
     }
   },
+  "form": {
+    "buttons": {
+      "add-collection": "Crear col·lecció"
+    }
+  },
   "header": {
     "log-in": "Inicia sessió",
     "log-out": "Tancar sessió",
     "register": "Registra't"
+  },
+  "home": {
+    "common": {
+      "mode-switch": "Mode creador"
+    },
+    "creator": {
+      "title": "Col·leccions"
+    }
+  },
+  "homes": {
+    "creator": {
+      "empty-list": "No s'ha creat cap col·lecció encara"
+    }
   },
   "landing": {
     "new-collection-button": "Crea la teva pròpia col·lecció",

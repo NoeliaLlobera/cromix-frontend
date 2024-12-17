@@ -4,8 +4,9 @@ import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
 
 
 import {routes} from './app.routes';
-import {HttpClient, provideHttpClient} from "@angular/common/http";
+import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -15,7 +16,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([AuthInterceptor])
+    ),
     provideTranslateService({
       defaultLanguage: 'ca',
       loader: {
@@ -24,5 +27,6 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }),
+
   ]
 };

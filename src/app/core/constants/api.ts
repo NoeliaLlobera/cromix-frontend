@@ -10,3 +10,11 @@ export const USERS_ENDPOINTS = {
   LOGIN: `${HOST}/users/login`,
   DELETE: (id: string) => `${HOST}/users/${id}`,
 }
+
+export const COLLECTIONS_ENDPOINTS = {
+  GET: `${HOST}/collections`,
+  GET_BY_ID: (id: string) => `${HOST}/collections/${id}`,
+  CREATE: `${HOST}/collections`,
+  DELETE: (id: string) => `${HOST}/collections/${id}`,
+
+}
