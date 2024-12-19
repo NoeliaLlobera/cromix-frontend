@@ -5,15 +5,16 @@
     <label class="form-check-label" for="flexSwitchCheckDefault">{{ 'home.common.mode-switch' | translate }}</label>
   </div>
 </div>
-<div class="row my-3 gap-3">
+<div class="row my-3">
   @for (collection of collections; track $index) {
-    <div class="card col-3">
-      <img [src]="'/img/placeholder.jpg'" class="card-img-top" alt="...">
+
+    <div class="card g-2 col-3">
       <div class="card-body">
         <h5 class="card-title">{{ collection.collection_name }}</h5>
-        <p class="my-1 p-0">Cromos: {{ collection.size }}</p>
-        <p class="my-1">Usuaris: {{ collection.users_connected }}</p>
-        <a href="#" class="btn btn-primary mt-3">{{ 'common.buttons.edit' | translate }}</a>
+        <p class="my-1 p-0 mb-3">Cromos: {{ collection.total_cromos }}</p>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary mt-3" (click)="edit(collection.collection_id)">{{ 'common.buttons.edit' | translate }}</button>
+        </div>
       </div>
     </div>
   } @empty {
@@ -22,6 +23,6 @@
 </div>
 <div class="d-flex justify-content-center my-5">
   <div>
-    <button class="btn btn-secondary">{{ 'form.buttons.add-collection' | translate }}</button>
+    <button class="btn btn-secondary" (click)="openModal()">{{ 'form.buttons.add-collection' | translate }}</button>
   </div>
 </div>

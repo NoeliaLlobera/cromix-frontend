@@ -1,6 +1,6 @@
 import {Component, inject, TemplateRef} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../core/services/auth.service";
 import {UserDTO} from "../../core/models/UserDTO";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -17,6 +17,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class HeaderComponent {
   private readonly auth: AuthService = inject(AuthService);
   private modalService: NgbModal = inject(NgbModal);
+  private readonly router: Router = inject(Router)
   user: UserDTO | null = null;
   startPage!: string;
 
@@ -36,6 +37,11 @@ export class HeaderComponent {
   logout() {
     this.auth.logout();
     this.startPage = '';
+    this.modalService.dismissAll();
+  }
+
+  home() {
+    this.router.navigate(['/home']);
     this.modalService.dismissAll();
   }
 }

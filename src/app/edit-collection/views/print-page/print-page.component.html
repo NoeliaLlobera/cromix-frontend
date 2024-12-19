@@ -1,0 +1,9 @@
+  @for (cromoType of cromoTypeData; track $index) {
+    <div class="image-container">
+      <img class="cromo-image rounded-4 border"
+           [src]="cromoType.image">
+      <button class="overlay-button border-0 rounded-4">
+        <i class="bi-pencil-square icon-big"></i>
+      </button>
+    </div>
+  }

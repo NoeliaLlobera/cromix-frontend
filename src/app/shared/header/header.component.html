@@ -21,7 +21,8 @@
     <p class="fw-bold m-0"> Usuari: {{ user?.username }}</p>
     <button type="button" class="btn-close" aria-label="tancar" (click)="modal.dismiss()"></button>
   </div>
-  <div class="modal-body d-flex justify-content-center">
+  <div class="modal-body d-flex justify-content-center gap-3">
+    <button type="button" class="btn btn-dark" (click)="home()">{{ 'header.home' | translate }}</button>
     <button type="button" class="btn btn-primary" (click)="logout()">{{ 'header.log-out' | translate }}</button>
   </div>
 </ng-template>

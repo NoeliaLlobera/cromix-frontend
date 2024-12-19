@@ -1,7 +1,7 @@
 export interface CollectionDTO {
-  id: string;
+  collection_id: string;
   collection_name: string;
-  size: number;
+  total_cromos: number;
   creator_id: string;
   users_connected: number
 }
