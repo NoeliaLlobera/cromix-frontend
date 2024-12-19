@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, TemplateRef} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
 import {CollectionDTO} from "../../../core/models/collectionDTO";
 import {HomeService} from "../../service/home.service";

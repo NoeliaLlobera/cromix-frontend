@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between mt-3">
   <div><h1>{{ collectionData.collection_name | translate }}</h1></div>
   <div>
-    <button class="btn btn-dark">Enrere</button>
+    <button class="btn btn-dark" routerLink="/home">Enrere</button>
   </div>
 </div>
 
@@ -21,7 +21,6 @@
       </div>
     }
   </div>
-
 }
 
 <div class="my-4">
@@ -34,7 +33,7 @@
     </div>
     <div class="col-lg-6 col-md-3 g-1"></div>
     <div class="col-lg-2  col-md-3 g-1">
-      <button class="btn btn-secondary col-12">Afegir cromo</button>
+      <button class="btn btn-secondary col-12" (click)="addCromoType()">Afegir cromo</button>
     </div>
 
   </div>
