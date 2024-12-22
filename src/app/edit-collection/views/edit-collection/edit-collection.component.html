@@ -5,17 +5,17 @@
   </div>
 </div>
 
-@if (cromoTypeData.length === 0) {
+@if (cromoTypeSignal().length === 0) {
   <div class="alert alert-warning mt-3" role="alert">
     Encara no s'ha creat cap cromo. Podeu començar a afegir-ne amb el botó de sota.
   </div>
 } @else {
   <div class="border p-4 rounded-4 d-flex gap-2 justify-content-start flex-wrap">
-    @for (cromoType of cromoTypeData; track $index) {
-      <div class="image-container">
-        <img class="cromo-image rounded-4 border"
+    @for (cromoType of cromoTypeSignal(); track $index) {
+      <div class="image-container p-0 m-0">
+        <img class="cromo-image"
              [src]="cromoType.image">
-        <button class="overlay-button border-0 rounded-4">
+        <button class="overlay-button border-0 rounded-4" (click)="modifyCromoType(cromoType)">
           <i class="bi-pencil-square icon-big"></i>
         </button>
       </div>
@@ -39,5 +39,4 @@
   </div>
 </div>
 
-<input type="file" class="form-control" [formControl]="control">
 

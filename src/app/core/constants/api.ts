@@ -19,5 +19,8 @@ export const COLLECTIONS_ENDPOINTS = {
 }
 
 export const CROMO_TYPES_ENDPOINTS = {
-  GET_BY_COLLECTION_ID: (id: string) => `${HOST}/cromo-type/${id}`
+  GET_BY_COLLECTION_ID: (collectionId: string) => `${HOST}/cromo-type/${collectionId}`,
+  CREATE: `${HOST}/cromo-type`,
+  DELETE: (id: string) => `${HOST}/cromo-type/${id}`,
+  UPDATE: (id: string) => `${HOST}/cromo-type/${id}`,
 }

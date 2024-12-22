@@ -3,6 +3,7 @@ import {EditCollectionService} from "../../services/edit-collection.service";
 import {CromoTypeDTO} from "../../../core/models/cromo-typeDTO";
 import {ActivatedRoute} from "@angular/router";
 import {ConfigService} from "../../../core/services/config.service";
+import {REVERSE_IMAGE} from "../../../core/constants";
 
 @Component({
   selector: 'app-print-page',
@@ -38,4 +39,5 @@ export class PrintPageComponent implements OnInit, OnDestroy {
   }
 
 
+    protected readonly REVERSE_IMAGE = REVERSE_IMAGE;
 }

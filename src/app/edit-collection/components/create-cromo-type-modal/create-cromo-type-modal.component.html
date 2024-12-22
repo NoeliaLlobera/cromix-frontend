@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Crear nou cromo</h4>
+  <h4 class="modal-title">{{ title }}</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 <form class="modal-body " [formGroup]="form">
@@ -8,16 +8,45 @@
       <label for="name" class="form-label">Nom</label>
       <input type="text" class="form-control" id="name" formControlName="name">
     </div>
-    <div class="col-md-6 my-2">
-      <label for="image" class="form-label">Imatge</label>
-      <input type="file" class="form-control" id="image" (change)="validateAndTransformFile($event)">
+    @if (!previewImage) {
+      <div class="col-md-6 my-2">
+        <label for="image" class="form-label">Imatge</label>
+        <input type="file" class="form-control" id="image" (change)="validateAndTransformFile($event)"
+        >
+      </div>
+    }
+
+  </div>
+  @if (!previewImage) {
+    <div class="d-flex justify-content-center my-4">
+      <button class="btn btn-primary" [disabled]="!form.valid" (click)="generatePrevisualization()">Generar
+        previsualització
+      </button>
     </div>
-  </div>
-  <div class="d-flex justify-content-center my-4">
-    <button class="btn btn-primary" [disabled]="!form.valid" (click)="generatePrevisualization()">Generar previsualització</button>
-  </div>
+  }
+  @if (previewImage) {
+    <div style="display: flex; justify-content: center">
+      <div style="position: relative; display: inline-block;"  id="preview">
+        <img
+          style="height: 380px; width: 270px; object-fit: cover; border: 10px solid black !important; border-radius: 12px; display: block;"
+          [src]="previewImage.image">
+        <h3
+          style="position: absolute; display: flex; padding: 10px; justify-content: center; width: 270px;
+          background-color: black; color: white; font-weight: lighter; top: calc(100% - 90px); left: calc(50% - 135px);
+          border-top: 6px solid white; border-bottom: 6px solid white; border-left: 8px solid black;
+          border-right: 8px solid black;"
+        >{{ previewImage.title }}</h3>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center my-4 gap-3">
+      @if (mode !== 'create'){
+        <button class="btn btn-dark" (click)="delete()">Eliminar</button>
+      }
+      <button class="btn btn-dark" (click)="resetPreview()">Modificar</button>
+      <button class="btn btn-secondary" (click)="saveCromo()">Publicar</button>
+    </div>
+  }
+
 </form>
 
-<div class="row">
-
-</div>

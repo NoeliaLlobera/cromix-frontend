@@ -3,4 +3,5 @@ export interface CromoTypeDTO {
   name: string;
   family_id: string;
   image: string;
+  base_image: string;
 }
