@@ -2,6 +2,7 @@
   "common": {
     "buttons": {
       "cancel": "Cancel·lar",
+      "delete": "Eliminar",
       "edit": "Editar",
       "login": "Iniciar sessió",
       "register": "Registre",

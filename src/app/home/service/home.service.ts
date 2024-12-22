@@ -19,4 +19,9 @@ export class HomeService {
   async postCollection(result: Promise<any>) {
     return await lastValueFrom(this.http.post(COLLECTIONS_ENDPOINTS.CREATE, result));
   }
+
+  async deleteCollection(collection_id: string): Promise<Object> {
+    return await lastValueFrom(this.http.delete(COLLECTIONS_ENDPOINTS.DELETE(collection_id)));
+
+  }
 }
