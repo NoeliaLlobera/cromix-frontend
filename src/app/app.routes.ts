@@ -32,6 +32,11 @@ export const routes: Routes = [
     path: 'printPage/:id',
     title: 'print-page.title',
     loadComponent: () => import('./edit-collection/views/print-page/print-page.component').then(c => c.PrintPageComponent)
+  },
+  {
+    path: 'preview/:collectionId',
+    title: 'preview.title',
+    loadComponent: () => import('./preview-cards/views/preview-cards/preview-cards.component').then(c => c.PreviewCardsComponent)
   }
 ];
 

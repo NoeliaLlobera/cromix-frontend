@@ -92,4 +92,8 @@ export class EditCollectionComponent implements OnInit {
 
     });
   }
+
+  preview() {
+    this.router.navigate([`/preview/${this.route.snapshot.params['id']}`]).then();
+  }
 }
