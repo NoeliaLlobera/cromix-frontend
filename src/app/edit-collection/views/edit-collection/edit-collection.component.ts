@@ -46,7 +46,7 @@ export class EditCollectionComponent implements OnInit {
   }
 
   printPage() {
-    window.open(`/printPage/${this.route.snapshot.params['id']}`, '_blank');
+    window.open(`/#/printPage/${this.route.snapshot.params['id']}`, '_blank');
   }
 
   async addCromoType() {

@@ -71,7 +71,6 @@ export class CreateCromoTypeModalComponent implements OnInit {
 
   generatePrevisualization() {
     this.form.disable();
-    console.log(this.form.value);
     this.previewImage = {image: this.form.value.image, title: this.form.value.name};
   }
 
@@ -81,11 +80,9 @@ export class CreateCromoTypeModalComponent implements OnInit {
       this.imgString = this.cromoType.base_image;
     };
     if (element) {
-      console.log('aqui');
       html2canvas(element).then(canvas => {
         document.body.appendChild(canvas)
         this.cromoImgString = canvas.toDataURL('image/png');
-        console.log(this.cromoImgString);
         this.activeModal.close({
           name: this.form.value.name,
           image: this.cromoImgString,

@@ -23,7 +23,7 @@ export class LoginService {
     try {
       const response = await lastValueFrom(this.http.post(USERS_ENDPOINTS.CREATE, loginData));
       this.growlService.setMessage('login.success', 'success');
-      this.router.navigate(['/home']).then();
+      this.router.navigate(['']).then();
     } catch (err: any){
       this.growlService.setMessage(`common.errors.${err.error.error}`, 'danger');
     }

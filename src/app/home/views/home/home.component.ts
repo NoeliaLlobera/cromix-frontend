@@ -31,9 +31,17 @@ export class HomeComponent implements OnInit {
   }
 
   async openModal() {
-    const result = this.modalService.open(CreateCollectionModalComponent, {size: 'lg', centered: true}).result;
-    await this.service.postCollection(result);
-    await this.service.getCollections();
+    const result = await this.modalService.open(CreateCollectionModalComponent, {size: 'lg', centered: true}).result;
+
+    const user = JSON.parse(localStorage.getItem('user')!);
+
+    const collection = {
+      collection_name: result,
+      creator_id: user.id
+    }
+
+    await this.service.postCollection(collection);
+    this.collections.set(await this.service.getCollections());
   }
 
 
@@ -47,7 +55,6 @@ export class HomeComponent implements OnInit {
     modal.componentInstance.message = `Estàs segur que vols eliminar aquesta col·lecció? Aquesta acció no es pot desfer.`;
 
     modal.result.then(async (result) => {
-      console.log(result);
       if (result) {
         try {
           await this.service.deleteCollection(collection_id);

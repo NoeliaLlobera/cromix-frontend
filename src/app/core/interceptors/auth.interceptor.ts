@@ -6,7 +6,6 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class AuthInterceptorr implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('aquí');
     if (localStorage.getItem('user')) {
       const storedUser = JSON.parse(String(localStorage.getItem('user')));
       const authToken = storedUser.id;
@@ -27,12 +26,9 @@ export class AuthInterceptorr implements HttpInterceptor {
 
 
 export function AuthInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  console.log('aquí');
-
   if (localStorage.getItem('user')) {
   const storedUser = JSON.parse(String(localStorage.getItem('user')));
   const authToken = storedUser.id;
-  console.log(authToken);
 
   const authReq = req.clone({
     setHeaders: {
