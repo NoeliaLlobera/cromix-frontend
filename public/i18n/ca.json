@@ -60,6 +60,9 @@
     "title": "Inicia sessió",
     "username": "Correu electrònic"
   },
+  "preview": {
+    "title": "Previsualització"
+  },
   "signup": {
     "title": "Crea el teu compte"
   }
