@@ -22,6 +22,16 @@ export const routes: Routes = [
     path: 'home',
     title: 'home.title',
     loadComponent: () => import('./home/views/home/home.component').then(c => c.HomeComponent)
+  },
+  {
+    path: 'edit/:id',
+    title: 'edit-collection.title',
+    loadComponent: () => import('./edit-collection/views/edit-collection/edit-collection.component').then(c => c.EditCollectionComponent)
+  },
+  {
+    path: 'printPage/:id',
+    title: 'print-page.title',
+    loadComponent: () => import('./edit-collection/views/print-page/print-page.component').then(c => c.PrintPageComponent)
   }
 ];
 

@@ -2,18 +2,46 @@
   "common": {
     "buttons": {
       "cancel": "Cancel·lar",
+      "delete": "Eliminar",
+      "edit": "Editar",
       "login": "Iniciar sessió",
-      "register": "Registre"
+      "register": "Registre",
+      "save": "Desar"
     },
     "errors": {
       "ER_DUP_ENTRY": "Ja existeix un usuari amb aquest correu electrònic.",
       "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades"
     }
   },
+  "edit-collection": {
+    "title": "Editar col·lecció"
+  },
+  "form": {
+    "buttons": {
+      "add-collection": "Crear col·lecció"
+    }
+  },
   "header": {
+    "home": "Anar a l'inici",
     "log-in": "Inicia sessió",
     "log-out": "Tancar sessió",
     "register": "Registra't"
+  },
+  "home": {
+    "common": {
+      "mode-switch": "Mode creador"
+    },
+    "creator": {
+      "create-modal": {
+        "save": "Guardar"
+      },
+      "title": "Col·leccions"
+    }
+  },
+  "homes": {
+    "creator": {
+      "empty-list": "No s'ha creat cap col·lecció encara"
+    }
   },
   "landing": {
     "new-collection-button": "Crea la teva pròpia col·lecció",

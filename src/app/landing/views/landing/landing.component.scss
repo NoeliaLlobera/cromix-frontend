@@ -3,3 +3,17 @@ footer {
     font-size: 30px;
   }
 }
+
+.landing-container {
+
+  @media (max-width: 768px) {
+    min-height: 50vw;
+    margin-top: 1.2rem;
+  }
+}
+
+.landing-image {
+  background: url('/img/taula-cromos.jpg') no-repeat center center;
+  background-size: cover;
+  height: 100%;
+}

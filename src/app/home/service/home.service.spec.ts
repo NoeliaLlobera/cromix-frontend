@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GrowlService } from './growl.service';
+import { HomeService } from './home.service';
 
-describe('GrowlService', () => {
-  let service: GrowlService;
+describe('HomeService', () => {
+  let service: HomeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GrowlService);
+    service = TestBed.inject(HomeService);
   });
 
   it('should be created', () => {

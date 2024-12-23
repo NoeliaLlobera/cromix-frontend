@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between mt-3">
+  <div><h1>{{ collectionData.collection_name | translate }}</h1></div>
+  <div>
+    <button class="btn btn-dark" routerLink="/home">Enrere</button>
+  </div>
+</div>
+
+@if (cromoTypeSignal().length === 0) {
+  <div class="alert alert-warning mt-3" role="alert">
+    Encara no s'ha creat cap cromo. Podeu començar a afegir-ne amb el botó de sota.
+  </div>
+} @else {
+  <div class="border p-4 rounded-4 d-flex gap-2 justify-content-start flex-wrap">
+    @for (cromoType of cromoTypeSignal(); track $index) {
+      <div class="image-container p-0 m-0">
+        <img class="cromo-image"
+             [src]="cromoType.image">
+        <button class="overlay-button border-0 rounded-4" (click)="modifyCromoType(cromoType)">
+          <i class="bi-pencil-square icon-big"></i>
+        </button>
+      </div>
+    }
+  </div>
+}
+
+<div class="my-4">
+  <div class="row">
+    <div class="col-lg-2 col-md-3 g-1">
+      <button class="btn btn-dark col-12" (click)="printPage()">Imprimeix</button>
+    </div>
+    <div class="col-lg-2 col-md-3 g-1">
+      <button class="btn btn-dark col-12">Previsualitzar</button>
+    </div>
+    <div class="col-lg-6 col-md-3 g-1"></div>
+    <div class="col-lg-2  col-md-3 g-1">
+      <button class="btn btn-secondary col-12" (click)="addCromoType()">Afegir cromo</button>
+    </div>
+
+  </div>
+</div>
+
+

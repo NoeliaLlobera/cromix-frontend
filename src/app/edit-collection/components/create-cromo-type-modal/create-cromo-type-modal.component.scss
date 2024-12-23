@@ -1,0 +1,49 @@
+.icon-big {
+  font-size: 2.5rem;
+
+}
+.no-background{
+  background-color: unset;
+}
+
+.cromo-image {
+  height: 380px;
+  width: 270px;
+  object-fit: cover;
+  border: 10px solid black !important;
+  border-radius: 12px;
+  display: block;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.overlay-button {
+  position: absolute;
+  top: 80%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(246, 246, 246, 0.54);
+}
+.overlay-button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.title-cromo{
+  position: absolute;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  width: 270px;
+  background-color: black;
+  color: white;
+  font-weight: lighter;
+  top: calc(100% - 90px);
+  left: calc(50% - 135px);
+  border-top: 6px solid white;
+  border-bottom: 6px solid white;
+  border-left: 8px solid black;
+  border-right: 8px solid black;
+}
