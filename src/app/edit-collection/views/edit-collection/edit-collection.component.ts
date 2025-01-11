@@ -13,13 +13,15 @@ import {HttpClient} from "@angular/common/http";
 import {CROMO_TYPES_ENDPOINTS} from "../../../core/constants/api";
 import {GrowlService} from "../../../core/services/growl.service";
 import {ConfirmationModalComponent} from "../../../shared/components/confirmation-modal/confirmation-modal.component";
+import {LoaderComponent} from "../../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-edit-collection',
   imports: [
     TranslatePipe,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    LoaderComponent
   ],
   templateUrl: './edit-collection.component.html',
   styleUrl: './edit-collection.component.scss'
@@ -34,15 +36,22 @@ export class EditCollectionComponent implements OnInit {
   title: string;
   collectionData!: CollectionDTO;
   cromoTypeSignal: WritableSignal<CromoTypeDTO[]> = signal([]);
+  loader: boolean = false;
+
 
   constructor() {
     this.title = this.route.snapshot.title || '';
   }
 
   async ngOnInit() {
-    const collection: CollectionDTO[] = await this.service.getCollectionById(this.route.snapshot.params['id']);
-    this.collectionData = collection[0];
-    this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
+    try {
+      this.loader = true;
+      const collection: CollectionDTO[] = await this.service.getCollectionById(this.route.snapshot.params['id']);
+      this.collectionData = collection[0];
+      this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
+    } finally {
+      this.loader = false;
+    }
   }
 
   printPage() {
@@ -55,11 +64,14 @@ export class EditCollectionComponent implements OnInit {
     modal.componentInstance.title = 'Crear nou cromo';
     modal.componentInstance.mode = 'create';
     modal.result.then((result) => {
-
-      this.http.post(CROMO_TYPES_ENDPOINTS.CREATE, result).subscribe(async (res) => {
-        this.growlService.setMessage('Cromo creat correctament.', 'success');
-        this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
-      });
+      try {
+        this.http.post(CROMO_TYPES_ENDPOINTS.CREATE, result).subscribe(async (res) => {
+          this.growlService.setMessage('Cromo creat correctament.', 'success');
+          this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
+        });
+      } finally {
+        this.loader = false;
+      }
     });
   }
 
@@ -71,10 +83,15 @@ export class EditCollectionComponent implements OnInit {
     modal.componentInstance.mode = 'edit';
     modal.result.then((result) => {
       if (result !== 'delete') {
-        this.http.patch(CROMO_TYPES_ENDPOINTS.UPDATE(cromoType.id), result).subscribe(async (res) => {
-          this.growlService.setMessage('Cromo modificat correctament.', 'success');
-          this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
-        });
+        try {
+          this.loader = true;
+          this.http.patch(CROMO_TYPES_ENDPOINTS.UPDATE(cromoType.id), result).subscribe(async (res) => {
+            this.growlService.setMessage('Cromo modificat correctament.', 'success');
+            this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
+          });
+        } finally {
+          this.loader = false;
+        }
       } else {
         const confirmationModal = this.modalService.open(ConfirmationModalComponent, {size: 'sm', centered: true});
         confirmationModal.componentInstance.title = 'Eliminar cromo';
@@ -82,14 +99,18 @@ export class EditCollectionComponent implements OnInit {
 
         confirmationModal.result.then((result) => {
           if (result) {
-            this.http.delete(CROMO_TYPES_ENDPOINTS.DELETE(cromoType.id)).subscribe(async (res) => {
-              this.growlService.setMessage('Cromo eliminat correctament.', 'success');
-              this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
-            });
+            try {
+              this.loader = true;
+              this.http.delete(CROMO_TYPES_ENDPOINTS.DELETE(cromoType.id)).subscribe(async (res) => {
+                this.growlService.setMessage('Cromo eliminat correctament.', 'success');
+                this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
+              });
+            } finally {
+              this.loader = false;
+            }
           }
         });
       }
-
     });
   }
 
