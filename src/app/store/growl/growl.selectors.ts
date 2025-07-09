@@ -1,14 +1,12 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {GrowlState} from './growl.reducer';
+import {GrowlState} from "./growl.reducers";
 
 export const selectGrowlState = createFeatureSelector<GrowlState>('growl');
-
 export const selectGrowlMessage = createSelector(
   selectGrowlState,
-  (state) => state.message
+  (state: GrowlState) => state.message
 );
-
-export const selectGrowlMessageType = createSelector(
+export const selectGrowlType = createSelector(
   selectGrowlState,
-  (state) => state.messageType
+  (state: GrowlState) => state.type
 );

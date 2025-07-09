@@ -11,9 +11,10 @@ import {
 } from "../../components/create-cromo-type-modal/create-cromo-type-modal.component";
 import {HttpClient} from "@angular/common/http";
 import {CROMO_TYPES_ENDPOINTS} from "../../../core/constants/api";
-import {GrowlService} from "../../../core/services/growl.service";
 import {ConfirmationModalComponent} from "../../../shared/components/confirmation-modal/confirmation-modal.component";
 import {LoaderComponent} from "../../../shared/components/loader/loader.component";
+import {Store} from "@ngrx/store";
+import {setGrowlMessage} from "../../../store/growl/growl.actions";
 
 @Component({
   selector: 'app-edit-collection',
@@ -21,7 +22,6 @@ import {LoaderComponent} from "../../../shared/components/loader/loader.componen
     TranslatePipe,
     ReactiveFormsModule,
     RouterLink,
-    LoaderComponent
   ],
   templateUrl: './edit-collection.component.html',
   styleUrl: './edit-collection.component.scss'
@@ -32,7 +32,7 @@ export class EditCollectionComponent implements OnInit {
   private readonly router: Router = inject(Router);
   private readonly http: HttpClient = inject(HttpClient);
   private modalService: NgbModal = inject(NgbModal);
-  private readonly growlService: GrowlService = inject(GrowlService);
+  private readonly store: Store = inject(Store);
   title: string;
   collectionData!: CollectionDTO;
   cromoTypeSignal: WritableSignal<CromoTypeDTO[]> = signal([]);
@@ -59,7 +59,8 @@ export class EditCollectionComponent implements OnInit {
     modal.result.then((result) => {
 
       this.http.post(CROMO_TYPES_ENDPOINTS.CREATE, result).subscribe(async (res) => {
-        this.growlService.setMessage('Cromo creat correctament.', 'success');
+        //TODO
+        this.store.dispatch(setGrowlMessage({growl: {message: 'Cromo creat correctament.', type: 'success'}}));
         this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
       });
     });
@@ -74,7 +75,8 @@ export class EditCollectionComponent implements OnInit {
     modal.result.then((result) => {
       if (result !== 'delete') {
         this.http.patch(CROMO_TYPES_ENDPOINTS.UPDATE(cromoType.id), result).subscribe(async (res) => {
-          this.growlService.setMessage('Cromo modificat correctament.', 'success');
+          this.store.dispatch(setGrowlMessage({growl: {message: 'Cromo modificat correctament.', type: 'success'}}));
+
           this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
         });
       } else {
@@ -85,7 +87,8 @@ export class EditCollectionComponent implements OnInit {
         confirmationModal.result.then((result) => {
           if (result) {
             this.http.delete(CROMO_TYPES_ENDPOINTS.DELETE(cromoType.id)).subscribe(async (res) => {
-              this.growlService.setMessage('Cromo eliminat correctament.', 'success');
+              this.store.dispatch(setGrowlMessage({growl: {message: 'Cromo eliminat correctament', type: 'success'}}));
+
               this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
             });
           }
