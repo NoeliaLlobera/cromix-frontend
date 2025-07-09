@@ -13,13 +13,15 @@ import {HttpClient} from "@angular/common/http";
 import {CROMO_TYPES_ENDPOINTS} from "../../../core/constants/api";
 import {GrowlService} from "../../../core/services/growl.service";
 import {ConfirmationModalComponent} from "../../../shared/components/confirmation-modal/confirmation-modal.component";
+import {LoaderComponent} from "../../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-edit-collection',
   imports: [
     TranslatePipe,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    LoaderComponent
   ],
   templateUrl: './edit-collection.component.html',
   styleUrl: './edit-collection.component.scss'
