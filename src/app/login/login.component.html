@@ -1,0 +1,46 @@
+<div class="row my-3">
+  <h1>{{ title | translate }}</h1>
+</div>
+<div class="row">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="col-md-6 offset-md-3">
+    <div class="my-3">
+      <label for="username" class="form-label">{{ 'login.username' | translate }}</label>
+      <input type="text" id="username" formControlName="username" class="form-control">
+      @if ((form.get('username')?.touched && form.get('username')?.invalid)) {
+        @if (form.get('username')?.errors?.['required']) {
+          <div class="text-danger">{{ 'login.errors.field-required' | translate }}</div>
+        }
+        @if (form.get('username')?.errors?.['email']) {
+          <div class="text-danger">{{ 'login.errors.username-invalid' | translate }}</div>
+        }
+      }
+    </div>
+    <div class="my-3">
+      <label for="password" class="form-label">{{ 'login.password' | translate }}</label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+      @if (form.get('username')?.touched && form.get('password')?.errors?.['required']) {
+        <div class="text-danger">{{ 'login.errors.field-required' | translate }}</div>
+      }
+      @if (form.get('password')?.touched && form.get('password')?.errors?.['minlength']) {
+        <div class="text-danger">{{ 'login.errors.password-length' | translate }}</div>
+      }
+    </div>
+    @if (mode === 'register') {
+      <div class="my-3">
+        <label for="confirm-password" class="form-label">{{ 'login.password-confirm' | translate }}</label>
+        <input type="password" id="confirm-password" formControlName="confirmPassword" class="form-control">
+        @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {
+          <div class="text-danger">{{ 'login.errors.field-required' | translate }}</div>
+        }
+        @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['minlength']) {
+          <div class="text-danger">{{ 'login.errors.password-length' | translate }}</div>
+        }
+      </div>
+    }
+    <div class="d-flex justify-content-center gap-4 my-5">
+      <button type="button" class="btn btn-primary" routerLink="">{{ 'common.buttons.cancel' | translate }}</button>
+      <button type="submit" class="btn btn-secondary" [disabled]="!form.valid">{{ btnSubmitText | translate }}</button>
+    </div>
+
+  </form>
+</div>

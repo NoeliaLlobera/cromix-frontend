@@ -1,0 +1,34 @@
+.icon-big {
+  font-size: 2.5rem;
+
+}
+.no-background{
+  background-color: unset;
+}
+
+.cromo-image {
+  height: 100% !important;
+  width: auto !important;
+
+  margin: 0;
+  padding: 0;
+}
+
+.image-container {
+  height: 200px;
+  position: relative;
+  display: inline-block;
+}
+
+.overlay-button {
+  position: absolute;
+  top: 80%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(246, 246, 246, 0.54);
+}
+.overlay-button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+

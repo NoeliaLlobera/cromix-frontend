@@ -1,0 +1,37 @@
+$primary: #6874E8;
+$secondary: #CFEE9E;
+$dark: #18020C;
+$light: #F6F6F6;
+
+.btn {
+  border-radius: 12px !important; /* Adjust the value as needed */
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+.btn-primary{
+  color: $light !important;
+}
+
+@import "bootstrap/scss/bootstrap";
+@import 'bootstrap-icons/font/bootstrap-icons.scss';
+
+:root {
+  //color variables
+  --primary:  #6874E8;
+  --secondary: #CFEE9E;
+  --text: #18020C;
+  --light: #F6F6F6;
+
+  // brakpoints
+  --sm: 576px;
+  --md: 768px;
+  --lg: 992px;
+  --xl: 1200px;
+  --xxl: 1400px;
+
+}
+
+
+canvas {
+  display: none !important;
+}

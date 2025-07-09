@@ -1,0 +1,8 @@
+  @for (cromoType of cromoTypeData; track $index) {
+    <div class="image-container">
+      <img class="cromo-image rounded-4 border"
+           [src]="cromoType.image">
+      <img class="cromo-image rounded-4 border"
+           [src]="REVERSE_IMAGE">
+    </div>
+  }
