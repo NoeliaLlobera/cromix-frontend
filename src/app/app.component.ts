@@ -4,7 +4,6 @@ import {NgbAlert, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {HeaderComponent} from "./shared/header/header.component";
 import {debounceTime, tap} from "rxjs";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {GrowlService} from "./core/services/growl.service";
 import {ConfigService} from "./core/services/config.service";
 
@@ -45,14 +44,12 @@ export class AppComponent {
   constructor() {
     this.growlService.message$
       .pipe(
-        takeUntilDestroyed(),
         tap((message) => (this.growlMessage = message)),
         debounceTime(5000),
       )
       .subscribe(() => this.selfClosingAlert?.close());
 
     this.growlService.messageType$.pipe(
-      takeUntilDestroyed(),
       tap((type) => (this.growlType = type))
     ).subscribe()
   }

@@ -1,0 +1,6 @@
+.not-mobile{
+  //when screen smaller than 768px not show
+  @media (max-width: 426px) {
+    display: none;
+  }
+}

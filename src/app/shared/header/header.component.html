@@ -5,10 +5,10 @@
     </a>
     <div>
       @if (user?.username) {
-        <button type="button" class="btn btn-dark me-1" (click)="openModal(content)">{{ user?.username }} <i
+        <button type="button" class="btn btn-dark me-1" (click)="openModal(content)"><span class="not-mobile">{{ user?.username }}</span> <i
           class="bi-person"></i></button>
       } @else {
-        <button type="button" class="btn btn-dark me-1" routerLink="login">{{ 'header.log-in' | translate }} <i
+        <button type="button" class="btn btn-dark me-1" routerLink="login"><span class="not-mobile">{{ 'header.log-in' | translate }}   </span> <i
           class="bi-person"></i></button>
       }
     </div>

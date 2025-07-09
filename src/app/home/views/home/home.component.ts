@@ -9,13 +9,11 @@ import {
 import {Router} from "@angular/router";
 import {ConfirmationModalComponent} from "../../../shared/components/confirmation-modal/confirmation-modal.component";
 import {GrowlService} from "../../../core/services/growl.service";
-import {LoaderComponent} from "../../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-home',
   imports: [
-    TranslatePipe,
-    LoaderComponent
+    TranslatePipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -27,15 +25,9 @@ export class HomeComponent implements OnInit {
   private readonly router: Router = inject(Router);
   private readonly growlService: GrowlService = inject(GrowlService);
   public collections: WritableSignal<CollectionDTO[]> = signal([]);
-  loader: boolean = false;
 
   async ngOnInit() {
-    try {
-      this.loader = true;
-      this.collections.set(await this.service.getCollections());
-    } finally {
-      this.loader = false;
-    }
+    this.collections.set(await this.service.getCollections());
   }
 
   async openModal() {
@@ -48,18 +40,13 @@ export class HomeComponent implements OnInit {
       creator_id: user.id
     }
 
-    try {
-      this.loader = true;
-      await this.service.postCollection(collection);
-    } finally {
-      this.loader = false;
-    }
+    await this.service.postCollection(collection);
     this.collections.set(await this.service.getCollections());
   }
 
 
   edit(id: string) {
-    this.router.navigate([`edit/${id}`]);
+    this.router.navigate([`edit/${id}`]).then();
   }
 
   async delete(collection_id: string) {
@@ -70,14 +57,11 @@ export class HomeComponent implements OnInit {
     modal.result.then(async (result) => {
       if (result) {
         try {
-          this.loader = true;
           await this.service.deleteCollection(collection_id);
           this.growlService.setMessage('Col·lecció eliminada correctament', 'success');
           this.collections.set(await this.service.getCollections());
         } catch (err) {
           this.growlService.setMessage('err', 'danger');
-        } finally {
-          this.loader = false;
         }
       }
     });
