@@ -8,8 +8,9 @@ import {
 } from "../../components/create-collection-modal/create-collection-modal.component";
 import {Router} from "@angular/router";
 import {ConfirmationModalComponent} from "../../../shared/components/confirmation-modal/confirmation-modal.component";
-import {GrowlService} from "../../../core/services/growl.service";
 import {LoaderComponent} from "../../../shared/components/loader/loader.component";
+import {setGrowlMessage} from "../../../store/growl/growl.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
   private readonly service: HomeService = inject(HomeService);
   private modalService: NgbModal = inject(NgbModal);
   private readonly router: Router = inject(Router);
-  private readonly growlService: GrowlService = inject(GrowlService);
+  private readonly store: Store = inject(Store);
   public collections: WritableSignal<CollectionDTO[]> = signal([]);
   loader: boolean = false;
 
@@ -72,10 +73,15 @@ export class HomeComponent implements OnInit {
         try {
           this.loader = true;
           await this.service.deleteCollection(collection_id);
-          this.growlService.setMessage('Col·lecció eliminada correctament', 'success');
+          this.store.dispatch(setGrowlMessage({
+            growl: {
+              message: 'Col·lecció eliminada correctament',
+              type: 'success'
+            }
+          }));
           this.collections.set(await this.service.getCollections());
         } catch (err) {
-          this.growlService.setMessage('err', 'danger');
+          this.store.dispatch(setGrowlMessage({growl: {message: 'err', type: 'danger'}}));
         } finally {
           this.loader = false;
         }

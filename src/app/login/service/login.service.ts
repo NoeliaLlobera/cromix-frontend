@@ -3,18 +3,19 @@ import {IloginModel} from "../models/login.model";
 import {HttpClient} from "@angular/common/http";
 import {USERS_ENDPOINTS} from "../../core/constants/api";
 import {lastValueFrom} from "rxjs";
-import {GrowlService} from "../../core/services/growl.service";
 import {AuthService} from "../../core/services/auth.service";
 import {UserDTO} from "../../core/models/UserDTO";
 import {Router} from "@angular/router";
+import {setGrowlMessage} from "../../store/growl/growl.actions";
+import {Store} from "@ngrx/store";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   private readonly http: HttpClient = inject(HttpClient);
-  private readonly growlService: GrowlService = inject(GrowlService)
   private readonly authService: AuthService = inject(AuthService);
+  private readonly store: Store = inject(Store);
   private readonly router: Router = inject(Router);
 
   constructor() { }
@@ -22,10 +23,10 @@ export class LoginService {
   async signup(loginData: IloginModel): Promise<void> {
     try {
       const response = await lastValueFrom(this.http.post(USERS_ENDPOINTS.CREATE, loginData));
-      this.growlService.setMessage('login.success', 'success');
+      this.store.dispatch(setGrowlMessage({growl: {message: 'login.success.', type: 'success'}}));
       this.router.navigate(['']).then();
     } catch (err: any){
-      this.growlService.setMessage(`common.errors.${err.error.error}`, 'danger');
+      this.store.dispatch(setGrowlMessage({growl: {message: `common.errors.${err.error.error}`, type: 'danger'}}));
     }
   }
 
@@ -36,7 +37,7 @@ export class LoginService {
       this.authService.setUser(response);
       this.router.navigate(['/home']).then();
     } catch (err: any){
-      this.growlService.setMessage(`common.errors.${err.error.code}`, 'danger');
+      this.store.dispatch(setGrowlMessage({growl: {message: `common.errors.${err.error.code}`, type: 'danger'}}));
     }
   }
 

@@ -3,9 +3,10 @@ import {RouterOutlet} from '@angular/router';
 import {NgbAlert, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {HeaderComponent} from "./shared/header/header.component";
-import {debounceTime, tap} from "rxjs";
-import {GrowlService} from "./core/services/growl.service";
+import {debounceTime, Observable, tap} from "rxjs";
 import {ConfigService} from "./core/services/config.service";
+import {Store} from "@ngrx/store";
+import {selectGrowlMessage, selectGrowlType} from "./store/growl/growl.selectors";
 
 @Component({
   selector: 'app-root',
@@ -35,22 +36,26 @@ export class AppComponent {
   growlMessage: string = '';
   growlType: 'danger' | 'success' | 'warning' = 'success';
   @ViewChild('growl', {static: false}) selfClosingAlert!: NgbAlert;
-
-  private readonly growlService: GrowlService = inject(GrowlService);
+  message$!: Observable<string>
+  messageType$!: Observable< 'danger' | 'success' | 'warning'>
   private readonly configService: ConfigService = inject(ConfigService);
+  private readonly store: Store = inject(Store);
 
   hasHeader: Signal<boolean> = computed(() => this.configService.hasHeader());
 
   constructor() {
-    this.growlService.message$
+    this.message$ = this.store.select(selectGrowlMessage);
+    this.messageType$ = this.store.select(selectGrowlType);
+
+    this.message$
       .pipe(
         tap((message) => (this.growlMessage = message)),
         debounceTime(5000),
       )
       .subscribe(() => this.selfClosingAlert?.close());
 
-    this.growlService.messageType$.pipe(
-      tap((type) => (this.growlType = type))
+    this.messageType$.pipe(
+      tap((type: 'danger' | 'success' | 'warning'):  'danger' | 'success' | 'warning' => (this.growlType = type))
     ).subscribe()
   }
 }

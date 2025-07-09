@@ -1,4 +1,4 @@
-import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter, withHashLocation} from '@angular/router';
 import {provideTranslateService, TranslateLoader} from "@ngx-translate/core";
 
@@ -8,7 +8,8 @@ import {HttpClient, provideHttpClient, withInterceptors} from "@angular/common/h
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
 import {provideState, provideStore} from '@ngrx/store';
-import {growlReducer} from "./store/growl/growl.reducer";
+import {provideStoreDevtools} from "@ngrx/store-devtools";
+import {growlReducer} from "./store/growl/growl.reducers";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -16,18 +17,23 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptors([AuthInterceptor])),
     provideTranslateService({
-        defaultLanguage: 'ca',
-        loader: {
-            provide: TranslateLoader,
-            useFactory: httpLoaderFactory,
-            deps: [HttpClient],
-        },
+      defaultLanguage: 'ca',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
     }),
     provideStore(),
-    provideState({ name: 'growl', reducer: growlReducer })
-]
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+    }),
+    provideState('growl', growlReducer),
+  ]
 };

@@ -1,43 +1,26 @@
-// src/app/core/interceptors/auth.interceptor.ts
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
-
-@Injectable()
-export class AuthInterceptorr implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (localStorage.getItem('user')) {
-      const storedUser = JSON.parse(String(localStorage.getItem('user')));
-      const authToken = storedUser.id;
-
-      const authReq = req.clone({
-        setHeaders: {
-          Authorization: String(authToken)
-        }
-      });
-
-      return next.handle(authReq);
-    } else {
-
-      return next.handle(req);
-    }
-  }
-}
-
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 export function AuthInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  if (localStorage.getItem('user')) {
-  const storedUser = JSON.parse(String(localStorage.getItem('user')));
-  const authToken = storedUser.id;
+  const router = inject(Router);
+  const user = localStorage.getItem('user');
+  let authReq = req;
 
-  const authReq = req.clone({
-    setHeaders: {
-      Authorization: authToken
-    }
-  });
-  return next(authReq);
-} else {
+  if (user) {
+    const authToken = JSON.parse(user).id;
+    authReq = req.clone({
+      setHeaders: { Authorization: authToken }
+    });
+  }
 
-  return next(req);
-}
+  return next(authReq).pipe(
+    catchError(error => {
+      console.log(error.statusText);
+      router.navigate(['login']).then();
+      return throwError(() => error);
+    })
+  );
 }

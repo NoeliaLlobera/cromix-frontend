@@ -8,7 +8,6 @@ import {TranslatePipe} from "@ngx-translate/core";
   selector: 'app-preview-cards',
   imports: [
     TranslatePipe,
-    RouterLink
   ],
   templateUrl: './preview-cards.component.html',
   styleUrl: './preview-cards.component.scss'
