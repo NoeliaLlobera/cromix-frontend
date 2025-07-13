@@ -53,7 +53,6 @@ export class LoginComponent {
     const loginData: IloginModel = this.form.value;
 
     if (this.mode === 'login') {
-      // await this.service.login(loginData);
       this.store.dispatch(login({user: loginData}));
     } else if (this.mode === 'register') {
       if (loginData.password !== loginData.confirmPassword) {
