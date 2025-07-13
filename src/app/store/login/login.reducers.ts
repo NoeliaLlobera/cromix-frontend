@@ -1,6 +1,15 @@
 import {createReducer, on} from "@ngrx/store";
 import {UserDTO} from "../../core/models/UserDTO";
-import {login, loginSuccess, loginFailure, localhostLogin, logout} from "./login.actions";
+import {
+  login,
+  loginSuccess,
+  loginFailure,
+  localhostLogin,
+  logout,
+  signup,
+  signupSuccess,
+  signupFailure
+} from "./login.actions";
 
 
 export interface LoginState {
@@ -57,5 +66,29 @@ export const loginReducer = createReducer(
       error: null,
       user: null
     }
-  ))
+  )),
+  on(signup, (state) => {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(signupSuccess, (state, {user}) => {
+    return {
+      ...state,
+      isLoading: false,
+      isLoggedIn: false,
+      error: null,
+      user: null
+    };
+  }),
+  on(signupFailure, (state, {error}) => ({
+        ...state,
+        isLoading: false,
+        isLoggedIn: false,
+        error: error,
+        user: null
+      }
+    ),
+  ),
 );

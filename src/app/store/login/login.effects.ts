@@ -1,7 +1,7 @@
 import {inject, Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {LoginService} from "../../login/service/login.service";
-import {exhaustMap, map, of, tap} from "rxjs";
+import {exhaustMap, map, mergeMap, of, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {logout} from "./login.actions";
@@ -17,8 +17,7 @@ export class LoginEffects {
       ofType('[Login Page] Login'),
       exhaustMap((loginData) => this.service.login(loginData.user)
         .pipe(
-          tap((login: any) => {
-            console.log(login);
+          tap((login) => {
             localStorage.setItem('user', JSON.stringify(login));
             this.router.navigate(['/home']).then();
           }),
@@ -42,4 +41,25 @@ export class LoginEffects {
     {dispatch: false}
   );
 
-}
+  signup$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType('[Login Page] Signup'),
+      exhaustMap((signupData) => this.service.signup(signupData.user)
+        .pipe(
+          tap((login) => {
+            // localStorage.setItem('user', JSON.stringify(login));
+            // this.router.navigate(['/home']).then();
+          }),
+          mergeMap(user => [
+            {type: '[Login Page] Signup Success', user: user},
+            {type: '[Growl] Set Message', growl: {message: 'login.success', type: 'success'}},
+            {type: '[Login Page] Login', user: user}
+          ]),
+          catchError(error => of({type: '[Login Page] Signup Failed', error: error.error.code}))
+        ))
+    );
+  })
+
+  }
+
+

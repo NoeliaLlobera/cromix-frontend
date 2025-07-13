@@ -6,7 +6,7 @@ import {IloginModel} from "./models/login.model";
 import {LoginService} from "./service/login.service";
 import {setGrowlMessage} from "../store/growl/growl.actions";
 import {Store} from "@ngrx/store";
-import {login} from "../store/login/login.actions";
+import {login, signup} from "../store/login/login.actions";
 
 @Component({
   selector: 'app-login',
@@ -59,7 +59,7 @@ export class LoginComponent {
         this.store.dispatch(setGrowlMessage({growl: {message: 'login.errors.pasword-match', type: 'danger'}}));
         return;
       }
-      await this.service.signup(loginData);
+      this.store.dispatch(signup({user: loginData}));
     }
   }
 
