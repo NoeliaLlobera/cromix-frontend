@@ -12,9 +12,19 @@ import {
 import {HttpClient} from "@angular/common/http";
 import {CROMO_TYPES_ENDPOINTS} from "../../../core/constants/api";
 import {ConfirmationModalComponent} from "../../../shared/components/confirmation-modal/confirmation-modal.component";
-import {LoaderComponent} from "../../../shared/components/loader/loader.component";
 import {Store} from "@ngrx/store";
 import {setGrowlMessage} from "../../../store/growl/growl.actions";
+import {Observable} from "rxjs";
+import {selectCollectionInfo, selectCromoTupes, selectIsCromosLoading} from "../../../store/cromos/cromos.selectors";
+import {
+  createCromo,
+  deleteCromo,
+  getCollectionInfo,
+  getCromos,
+  updateCromo
+} from "../../../store/cromos/cromos.actions";
+import {AsyncPipe, JsonPipe} from "@angular/common";
+import {LoaderComponent} from "../../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-edit-collection',
@@ -22,6 +32,9 @@ import {setGrowlMessage} from "../../../store/growl/growl.actions";
     TranslatePipe,
     ReactiveFormsModule,
     RouterLink,
+    AsyncPipe,
+    JsonPipe,
+    LoaderComponent,
   ],
   templateUrl: './edit-collection.component.html',
   styleUrl: './edit-collection.component.scss'
@@ -34,17 +47,23 @@ export class EditCollectionComponent implements OnInit {
   private modalService: NgbModal = inject(NgbModal);
   private readonly store: Store = inject(Store);
   title: string;
-  collectionData!: CollectionDTO;
-  cromoTypeSignal: WritableSignal<CromoTypeDTO[]> = signal([]);
+  collection$!: Observable<CollectionDTO>;
+  cromoType$!: Observable<CromoTypeDTO[]>;
+  loader$!: Observable<boolean>;
 
   constructor() {
     this.title = this.route.snapshot.title || '';
   }
 
   async ngOnInit() {
-    const collection: CollectionDTO[] = await this.service.getCollectionById(this.route.snapshot.params['id']);
-    this.collectionData = collection[0];
-    this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
+    const collectionId = this.route.snapshot.params['id'];
+
+    this.store.dispatch(getCollectionInfo({collection_id: collectionId}));
+    this.store.dispatch(getCromos({collection_id: collectionId}));
+
+    this.loader$ = this.store.select(selectIsCromosLoading);
+    this.collection$ = this.store.select(selectCollectionInfo);
+    this.cromoType$ = this.store.select(selectCromoTupes);
   }
 
   printPage() {
@@ -57,12 +76,7 @@ export class EditCollectionComponent implements OnInit {
     modal.componentInstance.title = 'Crear nou cromo';
     modal.componentInstance.mode = 'create';
     modal.result.then((result) => {
-
-      this.http.post(CROMO_TYPES_ENDPOINTS.CREATE, result).subscribe(async (res) => {
-        //TODO
-        this.store.dispatch(setGrowlMessage({growl: {message: 'Cromo creat correctament.', type: 'success'}}));
-        this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
-      });
+      this.store.dispatch(createCromo({cromo: {...result}}));
     });
   }
 
@@ -74,11 +88,7 @@ export class EditCollectionComponent implements OnInit {
     modal.componentInstance.mode = 'edit';
     modal.result.then((result) => {
       if (result !== 'delete') {
-        this.http.patch(CROMO_TYPES_ENDPOINTS.UPDATE(cromoType.id), result).subscribe(async (res) => {
-          this.store.dispatch(setGrowlMessage({growl: {message: 'Cromo modificat correctament.', type: 'success'}}));
-
-          this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
-        });
+        this.store.dispatch(updateCromo({cromo: {...cromoType, ...result}}));
       } else {
         const confirmationModal = this.modalService.open(ConfirmationModalComponent, {size: 'sm', centered: true});
         confirmationModal.componentInstance.title = 'Eliminar cromo';
@@ -86,11 +96,7 @@ export class EditCollectionComponent implements OnInit {
 
         confirmationModal.result.then((result) => {
           if (result) {
-            this.http.delete(CROMO_TYPES_ENDPOINTS.DELETE(cromoType.id)).subscribe(async (res) => {
-              this.store.dispatch(setGrowlMessage({growl: {message: 'Cromo eliminat correctament', type: 'success'}}));
-
-              this.cromoTypeSignal.set(await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']));
-            });
+            this.store.dispatch(deleteCromo({cromo_id: cromoType.id}));
           }
         });
       }
