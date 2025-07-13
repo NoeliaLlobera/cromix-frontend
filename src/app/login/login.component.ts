@@ -25,10 +25,8 @@ export class LoginComponent {
   mode: 'login' | 'register' = 'login';
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly fb: FormBuilder = inject(FormBuilder);
-  private readonly service: LoginService = inject(LoginService);
   private readonly store: Store = inject(Store);
-
-
+  
   constructor() {
     this.title = this.route.snapshot.title || '';
     this.title === 'login.title' ? this.mode = 'login' : this.mode = 'register';
@@ -62,6 +60,4 @@ export class LoginComponent {
       this.store.dispatch(signup({user: loginData}));
     }
   }
-
-
 }
