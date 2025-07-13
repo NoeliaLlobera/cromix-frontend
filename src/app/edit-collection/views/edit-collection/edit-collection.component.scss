@@ -1,6 +1,5 @@
 .icon-big {
   font-size: 2.5rem;
-
 }
 .no-background{
   background-color: unset;
@@ -8,14 +7,15 @@
 
 .cromo-image {
   height: 100% !important;
+  aspect-ratio: 270 / 380 !important;
   width: auto !important;
-
   margin: 0;
   padding: 0;
 }
 
 .image-container {
   height: 200px;
+  aspect-ratio: 270 / 380 !important;
   position: relative;
   display: inline-block;
 }

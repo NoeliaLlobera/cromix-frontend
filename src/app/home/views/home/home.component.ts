@@ -1,7 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, effect, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
 import {CollectionDTO} from "../../../core/models/collectionDTO";
-import {HomeService} from "../../service/home.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {
   CreateCollectionModalComponent
@@ -31,6 +30,7 @@ export class HomeComponent implements OnInit {
   private readonly store: Store = inject(Store);
   collections$!: Observable<CollectionDTO[]>;
   loader$!: Observable<boolean>;
+  modeCollector: WritableSignal<boolean> = signal(false);
 
   async ngOnInit() {
     this.store.dispatch(loadCollections());
@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit {
     const result =
       await this.modalService.open(CreateCollectionModalComponent, {size: 'lg', centered: true}).result;
     const user = JSON.parse(localStorage.getItem('user')!);
-
     const collection = {
       collection_name: result,
       creator_id: user.id
