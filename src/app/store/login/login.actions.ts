@@ -26,3 +26,18 @@ export const localhostLogin = createAction(
 export const logout = createAction(
   '[Login Page] Logout'
 );
+
+export const signup = createAction(
+  '[Login Page] Signup',
+  props<{ user: IloginModel }>()
+)
+
+export const signupSuccess = createAction(
+  '[Login Page] Signup Success',
+  props<{ user: UserDTO }>()
+);
+
+export const signupFailure = createAction(
+  '[Login Page] Signup Failed',
+  props<{ error: string }>()
+);
