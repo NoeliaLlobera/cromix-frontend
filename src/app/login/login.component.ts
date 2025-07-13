@@ -6,7 +6,7 @@ import {IloginModel} from "./models/login.model";
 import {LoginService} from "./service/login.service";
 import {setGrowlMessage} from "../store/growl/growl.actions";
 import {Store} from "@ngrx/store";
-import {login, signup} from "../store/login/login.actions";
+import {login, signup} from "../store/auth/auth.actions";
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly store: Store = inject(Store);
-  
+
   constructor() {
     this.title = this.route.snapshot.title || '';
     this.title === 'login.title' ? this.mode = 'login' : this.mode = 'register';
