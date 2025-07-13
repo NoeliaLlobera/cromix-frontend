@@ -1,9 +1,12 @@
 import {Component, inject, TemplateRef} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
 import {Router, RouterLink} from "@angular/router";
-import {AuthService} from "../../core/services/auth.service";
 import {UserDTO} from "../../core/models/UserDTO";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Store} from "@ngrx/store";
+import {selectLoginState, selectUser} from "../../store/login/login.selectors";
+import {Observable} from "rxjs";
+import {logout} from "../../store/login/login.actions";
 
 @Component({
   selector: 'app-header',
@@ -15,19 +18,26 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  private readonly auth: AuthService = inject(AuthService);
   private modalService: NgbModal = inject(NgbModal);
+  private store: Store = inject(Store);
   private readonly router: Router = inject(Router)
   user: UserDTO | null = null;
   startPage!: string;
+  user$!: Observable<UserDTO | null>;
 
   constructor() {
     this.startPage = '';
-    this.auth.user$().subscribe(user => {
-      this.user = user;
+    this.user$ = this.store.select(selectUser);
+    this.startPage = 'home';
+    this.store.select(selectLoginState).subscribe(loginState => {
+      this.user = loginState.user;
       this.startPage = 'home';
     });
-    this.auth.startSession();
+    const storedUser: string | null = localStorage.getItem('user');
+    if (storedUser) {
+      const user: UserDTO = JSON.parse(storedUser);
+      this.store.dispatch({ type: '[Login Page] Localhost Login', user: user });
+    }
   }
 
   openModal(content: TemplateRef<any>) {
@@ -35,13 +45,13 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.auth.logout();
+    this.store.dispatch(logout())
     this.startPage = '';
     this.modalService.dismissAll();
   }
 
   home() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home']).then();
     this.modalService.dismissAll();
   }
 }

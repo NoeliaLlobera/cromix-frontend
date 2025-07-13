@@ -1,11 +1,12 @@
 import {Component, inject} from '@angular/core';
 import {TranslatePipe} from "@ngx-translate/core";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {IloginModel} from "./models/login.model";
 import {LoginService} from "./service/login.service";
 import {setGrowlMessage} from "../store/growl/growl.actions";
 import {Store} from "@ngrx/store";
+import {login} from "../store/login/login.actions";
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,6 @@ export class LoginComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly service: LoginService = inject(LoginService);
-  private readonly router: Router = inject(Router);
   private readonly store: Store = inject(Store);
 
 
@@ -53,7 +53,8 @@ export class LoginComponent {
     const loginData: IloginModel = this.form.value;
 
     if (this.mode === 'login') {
-      await this.service.login(loginData);
+      // await this.service.login(loginData);
+      this.store.dispatch(login({user: loginData}));
     } else if (this.mode === 'register') {
       if (loginData.password !== loginData.confirmPassword) {
         this.store.dispatch(setGrowlMessage({growl: {message: 'login.errors.pasword-match', type: 'danger'}}));
