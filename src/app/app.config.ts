@@ -11,7 +11,7 @@ import {provideState, provideStore} from '@ngrx/store';
 import {provideStoreDevtools} from "@ngrx/store-devtools";
 import {growlReducer} from "./store/growl/growl.reducers";
 import {loginReducer} from "./store/login/login.reducers";
-import { provideEffects } from '@ngrx/effects';
+import {provideEffects} from '@ngrx/effects';
 import {LoginEffects} from "./store/login/login.effects";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
@@ -40,6 +40,5 @@ export const appConfig: ApplicationConfig = {
     provideState('growl', growlReducer),
     provideState('login', loginReducer),
     provideEffects(LoginEffects),
-    provideEffects()
 ]
 };

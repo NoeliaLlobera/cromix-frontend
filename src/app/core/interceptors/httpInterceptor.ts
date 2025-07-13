@@ -26,6 +26,7 @@ export function HttpInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
       if (error.status === 404) {
         return throwError(() => error);
       } else {
+        localStorage.removeItem('user');
         router.navigate(['login']).then();
         return throwError(() => error);
       }

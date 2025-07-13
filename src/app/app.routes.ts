@@ -1,5 +1,9 @@
 import {Routes} from '@angular/router';
 import {LandingComponent} from "./landing/views/landing/landing.component";
+import {provideState} from "@ngrx/store";
+import {collectionsReducer} from "./store/collections/collections.reducers";
+import {provideEffects} from "@ngrx/effects";
+import {CollectionsEffects} from "./store/collections/collections.effects";
 
 export const routes: Routes = [
   {
@@ -21,12 +25,17 @@ export const routes: Routes = [
   {
     path: 'home',
     title: 'home.title',
-    loadComponent: () => import('./home/views/home/home.component').then(c => c.HomeComponent)
+    loadComponent: () => import('./home/views/home/home.component').then(c => c.HomeComponent),
+    providers: [
+      provideState('collections', collectionsReducer),
+      provideEffects(CollectionsEffects)
+    ]
   },
   {
     path: 'edit/:id',
     title: 'edit-collection.title',
-    loadComponent: () => import('./edit-collection/views/edit-collection/edit-collection.component').then(c => c.EditCollectionComponent)
+    loadComponent: () => import('./edit-collection/views/edit-collection/edit-collection.component').then(c => c.EditCollectionComponent),
+
   },
   {
     path: 'printPage/:id',
