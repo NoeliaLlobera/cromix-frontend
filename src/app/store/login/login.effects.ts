@@ -19,7 +19,7 @@ export class LoginEffects {
         .pipe(
           tap((login: any) => {
             console.log(login);
-            localStorage.setItem('user', JSON.stringify(login)); //TODO ESTO VA EN UN EFFECT
+            localStorage.setItem('user', JSON.stringify(login));
             this.router.navigate(['/home']).then();
           }),
           map(login => {
