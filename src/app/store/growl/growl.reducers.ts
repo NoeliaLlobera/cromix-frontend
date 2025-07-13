@@ -1,4 +1,3 @@
-import {GrowlModel} from "../../core/models/growl";
 import {createReducer, on} from "@ngrx/store";
 import {setGrowlMessage} from "./growl.actions";
 

@@ -10,7 +10,8 @@
     },
     "errors": {
       "ER_DUP_ENTRY": "Ja existeix un usuari amb aquest correu electrònic.",
-      "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades"
+      "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades",
+      "undefined": "S'ha produït un error intern. Si us plau, torna-ho a intentar més tard."
     }
   },
   "edit-collection": {
