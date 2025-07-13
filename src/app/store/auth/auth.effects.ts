@@ -4,10 +4,10 @@ import {LoginService} from "../../login/service/login.service";
 import {exhaustMap, map, mergeMap, of, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {logout} from "./login.actions";
+import {logout} from "./auth.actions";
 
 @Injectable()
-export class LoginEffects {
+export class AuthEffects {
   private actions$ = inject(Actions);
   private service = inject(LoginService);
   private readonly router: Router = inject(Router);

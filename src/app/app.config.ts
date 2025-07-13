@@ -10,9 +10,9 @@ import {HttpInterceptor} from "./core/interceptors/httpInterceptor";
 import {provideState, provideStore} from '@ngrx/store';
 import {provideStoreDevtools} from "@ngrx/store-devtools";
 import {growlReducer} from "./store/growl/growl.reducers";
-import {loginReducer} from "./store/login/login.reducers";
 import {provideEffects} from '@ngrx/effects';
-import {LoginEffects} from "./store/login/login.effects";
+import {AuthEffects} from "./store/auth/auth.effects";
+import {authReducer} from "./store/auth/auth.reducers";
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -38,7 +38,7 @@ export const appConfig: ApplicationConfig = {
         autoPause: true,
     }),
     provideState('growl', growlReducer),
-    provideState('login', loginReducer),
-    provideEffects(LoginEffects),
+    provideState('login', authReducer),
+    provideEffects(AuthEffects),
 ]
 };

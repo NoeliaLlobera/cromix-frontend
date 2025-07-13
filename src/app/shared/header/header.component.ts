@@ -4,9 +4,9 @@ import {Router, RouterLink} from "@angular/router";
 import {UserDTO} from "../../core/models/UserDTO";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Store} from "@ngrx/store";
-import {selectLoginState, selectUser} from "../../store/login/login.selectors";
+import {selectLoginState, selectUser} from "../../store/auth/auth.selectors";
 import {Observable} from "rxjs";
-import {logout} from "../../store/login/login.actions";
+import {logout} from "../../store/auth/auth.actions";
 
 @Component({
   selector: 'app-header',

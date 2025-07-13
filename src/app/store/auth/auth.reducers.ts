@@ -9,24 +9,24 @@ import {
   signup,
   signupSuccess,
   signupFailure
-} from "./login.actions";
+} from "./auth.actions";
 
 
-export interface LoginState {
+export interface AuthState {
   isLoading: boolean;
   error: string | null;
   isLoggedIn: boolean;
   user: UserDTO | null;
 }
 
-export const initialLoginState: LoginState = {
+export const initialAuthState: AuthState = {
   isLoading: false,
   error: null,
   isLoggedIn: false,
   user: null
 };
-export const loginReducer = createReducer(
-  initialLoginState,
+export const authReducer = createReducer(
+  initialAuthState,
   on(login, (state) => {
     return {
       ...state,
