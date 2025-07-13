@@ -19,7 +19,8 @@
   },
   "form": {
     "buttons": {
-      "add-collection": "Crear col·lecció"
+      "add-collection": "Crear col·lecció",
+      "search-collection": "Cerca col·lecció"
     }
   },
   "header": {
@@ -29,8 +30,10 @@
     "register": "Registra't"
   },
   "home": {
+    "title": "Cromix",
     "common": {
-      "mode-switch": "Mode creador"
+      "mode-switch-creator": "Mode creador",
+      "mode-switch-collector": "Mode col·leccionista"
     },
     "creator": {
       "create-modal": {

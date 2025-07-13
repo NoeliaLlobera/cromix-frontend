@@ -6,6 +6,7 @@ import {provideEffects} from "@ngrx/effects";
 import {CollectionsEffects} from "./store/collections/collections.effects";
 import {cromosReducer} from "./store/cromos/cromos.reducers";
 import {CromosEffects} from "./store/cromos/cromos.effects";
+import {AuthGuard} from "./core/guard/auth.guard";
 
 export const routes: Routes = [
   {
@@ -28,6 +29,7 @@ export const routes: Routes = [
     path: 'home',
     title: 'home.title',
     loadComponent: () => import('./home/views/home/home.component').then(c => c.HomeComponent),
+    canMatch: [AuthGuard],
     providers: [
       provideState('collections', collectionsReducer),
       provideEffects(CollectionsEffects)
@@ -36,6 +38,7 @@ export const routes: Routes = [
   {
     path: 'edit/:id',
     title: 'edit-collection.title',
+    canMatch: [AuthGuard],
     loadComponent: () => import('./edit-collection/views/edit-collection/edit-collection.component').then(c => c.EditCollectionComponent),
     providers: [
       provideState('cromos', cromosReducer),
@@ -45,6 +48,7 @@ export const routes: Routes = [
   {
     path: 'printPage/:id',
     title: 'print-page.title',
+    canMatch: [AuthGuard],
     loadComponent: () => import('./edit-collection/views/print-page/print-page.component').then(c => c.PrintPageComponent),
     providers: [
       provideState('cromos', cromosReducer),
@@ -54,12 +58,17 @@ export const routes: Routes = [
   {
     path: 'preview/:collectionId',
     title: 'preview.title',
+    canMatch: [AuthGuard],
     loadComponent: () => import('./preview-cards/views/preview-cards/preview-cards.component').then(c => c.PreviewCardsComponent),
     providers: [
       provideState('cromos', cromosReducer),
       provideEffects(CromosEffects)
     ]
-  }
+  },
+  {
+    path: '**',
+    component: LandingComponent
+  },
 ];
 
 

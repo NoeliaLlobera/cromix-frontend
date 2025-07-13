@@ -29,10 +29,10 @@
 <div class="my-4">
   <div class="row">
     <div class="col-lg-2 col-md-3 g-1">
-      <button class="btn btn-dark col-12" (click)="printPage()">Generar imprimible</button>
+      <button class="btn btn-dark col-12" (click)="printPage()" [disabled]="(cromoType$ | async)?.length === 0">Generar imprimible</button>
     </div>
     <div class="col-lg-2 col-md-3 g-1">
-      <button class="btn btn-dark col-12" (click)="preview()">Previsualitzar cromos</button>
+      <button class="btn btn-dark col-12" (click)="preview()" [disabled]="(cromoType$ | async)?.length === 0">Previsualitzar cromos</button>
     </div>
     <div class="col-lg-6 col-md-3 g-1"></div>
     <div class="col-lg-2  col-md-3 g-1">

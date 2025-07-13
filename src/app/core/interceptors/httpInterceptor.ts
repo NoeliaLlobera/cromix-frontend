@@ -11,8 +11,6 @@ export function HttpInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
   const store: Store = inject(Store);
   const user: any = localStorage.getItem('user');
   let authReq = req;
-
-  console.log(user)
   if (user) {
     const authToken = JSON.parse(user).id;
     authReq = req.clone({

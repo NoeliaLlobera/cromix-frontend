@@ -31,8 +31,6 @@ export class PrintPageComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.store.dispatch(getCromos({collection_id: this.route.snapshot.params['id']}));
-    // this.cromoTypeData = await this.service.getCromoTypeByCollectionId(this.route.snapshot.params['id']);
-    // open print dialog
     this.cromoTypeData$ = this.store.select(selectCromoTupes);
     setTimeout(() => {
       window.print();
@@ -43,7 +41,6 @@ export class PrintPageComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
     this.configService.hasHeader.set(true);
-
   }
 
 

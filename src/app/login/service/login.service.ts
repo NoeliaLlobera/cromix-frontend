@@ -14,19 +14,6 @@ export class LoginService {
   private readonly store: Store = inject(Store);
   private readonly router: Router = inject(Router);
 
-  constructor() {
-  }
-
-  // async signup(loginData: IloginModel): Promise<void> {
-  //   try {
-  //     const response = await lastValueFrom(this.http.post(USERS_ENDPOINTS.CREATE, loginData));
-  //     this.store.dispatch(setGrowlMessage({growl: {message: 'login.success.', type: 'success'}}));
-  //     this.router.navigate(['']).then();
-  //   } catch (err: any) {
-  //     this.store.dispatch(setGrowlMessage({growl: {message: `common.errors.${err.error.error}`, type: 'danger'}}));
-  //   }
-  // }
-
   signup(loginData: IloginModel): Observable<IloginModel> {
     return this.http.post<IloginModel>(USERS_ENDPOINTS.CREATE, loginData);
   }
