@@ -1,12 +1,10 @@
-import {Routes} from '@angular/router';
-import {LandingComponent} from "./landing/views/landing/landing.component";
-import {provideState} from "@ngrx/store";
-import {collectionsReducer} from "./store/collections/collections.reducers";
-import {provideEffects} from "@ngrx/effects";
-import {CollectionsEffects} from "./store/collections/collections.effects";
-import {cromosReducer} from "./store/cromos/cromos.reducers";
-import {CromosEffects} from "./store/cromos/cromos.effects";
-import {AuthGuard} from "./core/guard/auth.guard";
+import { Routes } from '@angular/router';
+import { provideEffects } from "@ngrx/effects";
+import { provideState } from "@ngrx/store";
+import { AuthGuard } from "./core/guard/auth.guard";
+import { LandingComponent } from "./landing/views/landing/landing.component";
+import { CromosEffects } from "./store/cromos/cromos.effects";
+import { cromosReducer } from "./store/cromos/cromos.reducers";
 
 export const routes: Routes = [
   {
@@ -30,20 +28,12 @@ export const routes: Routes = [
     title: 'home.title',
     loadComponent: () => import('./home/views/home/home.component').then(c => c.HomeComponent),
     canMatch: [AuthGuard],
-    providers: [
-      provideState('collections', collectionsReducer),
-      provideEffects(CollectionsEffects)
-    ]
   },
   {
     path: 'edit/:id',
     title: 'edit-collection.title',
     canMatch: [AuthGuard],
     loadComponent: () => import('./edit-collection/views/edit-collection/edit-collection.component').then(c => c.EditCollectionComponent),
-    providers: [
-      provideState('cromos', cromosReducer),
-      provideEffects(CromosEffects)
-    ]
   },
   {
     path: 'printPage/:id',

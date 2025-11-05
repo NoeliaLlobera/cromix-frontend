@@ -3,40 +3,34 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {Router, RouterLink} from "@angular/router";
 import {UserDTO} from "../../core/models/UserDTO";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Store} from "@ngrx/store";
-import {selectLoginState, selectUser} from "../../store/auth/auth.selectors";
 import {Observable} from "rxjs";
-import {logout} from "../../store/auth/auth.actions";
+import {LoginService} from "../../login/service/login.service";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-header',
   imports: [
     TranslatePipe,
-    RouterLink
+    RouterLink,
+    AsyncPipe
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   private modalService: NgbModal = inject(NgbModal);
-  private store: Store = inject(Store);
   private readonly router: Router = inject(Router)
-  user: UserDTO | null = null;
+  private readonly loginService: LoginService = inject(LoginService)
   startPage!: string;
   user$!: Observable<UserDTO | null>;
 
   constructor() {
     this.startPage = '';
-    this.user$ = this.store.select(selectUser);
+    this.user$ = this.loginService.user$;
     this.startPage = 'home';
-    this.store.select(selectLoginState).subscribe(loginState => {
-      this.user = loginState.user;
-      this.startPage = 'home';
-    });
     const storedUser: string | null = localStorage.getItem('user');
     if (storedUser) {
       const user: UserDTO = JSON.parse(storedUser);
-      this.store.dispatch({ type: '[Login Page] Localhost Login', user: user });
     }
   }
 
@@ -45,7 +39,8 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.store.dispatch(logout())
+    // this.store.dispatch(logout())
+    this.loginService.logout();
     this.startPage = '';
     this.modalService.dismissAll();
   }

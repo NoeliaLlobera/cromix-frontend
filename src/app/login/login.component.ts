@@ -1,12 +1,11 @@
-import {Component, inject} from '@angular/core';
-import {TranslatePipe} from "@ngx-translate/core";
-import {ActivatedRoute, RouterLink} from "@angular/router";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {IloginModel} from "./models/login.model";
-import {LoginService} from "./service/login.service";
-import {setGrowlMessage} from "../store/growl/growl.actions";
-import {Store} from "@ngrx/store";
-import {login, signup} from "../store/auth/auth.actions";
+import { Component, inject } from '@angular/core';
+import { TranslatePipe } from "@ngx-translate/core";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { IloginModel } from "./models/login.model";
+import { LoginService } from "./service/login.service";
+import { Store } from "@ngrx/store";
+import { GrowlService } from '../core/services/growl.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +25,10 @@ export class LoginComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly store: Store = inject(Store);
+  private readonly service: LoginService = inject(LoginService);
+  private readonly router: Router = inject(Router);
+  private readonly growlService: GrowlService = inject(GrowlService);
+
 
   constructor() {
     this.title = this.route.snapshot.title || '';
@@ -51,13 +54,16 @@ export class LoginComponent {
     const loginData: IloginModel = this.form.value;
 
     if (this.mode === 'login') {
-      this.store.dispatch(login({user: loginData}));
+      await this.service.loginAction(loginData);
+      this.router.navigate(['/home']).then();
+
     } else if (this.mode === 'register') {
       if (loginData.password !== loginData.confirmPassword) {
-        this.store.dispatch(setGrowlMessage({growl: {message: 'login.errors.pasword-match', type: 'danger'}}));
+        this.growlService.setGrowlMessage({ message: 'login.errors.pasword-match', type: 'danger' });
         return;
       }
-      this.store.dispatch(signup({user: loginData}));
+
+      await this.service.signupAction(loginData);
     }
   }
 }

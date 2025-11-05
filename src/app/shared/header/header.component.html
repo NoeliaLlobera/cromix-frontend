@@ -4,8 +4,8 @@
       <img src="/logo/cromix-full-lila.webp" alt="" width="80px">
     </a>
     <div>
-      @if (user?.username) {
-        <button type="button" class="btn btn-dark me-1" (click)="openModal(content)"><span class="not-mobile">{{ user?.username }}</span> <i
+      @if ((user$ | async)?.username) {
+        <button type="button" class="btn btn-dark me-1" (click)="openModal(content)"><span class="not-mobile">{{ (user$ | async)?.username }}</span> <i
           class="bi-person"></i></button>
       } @else {
         <button type="button" class="btn btn-dark me-1" routerLink="login"><span class="not-mobile">{{ 'header.log-in' | translate }}   </span> <i
@@ -18,7 +18,7 @@
 
 <ng-template #content let-modal>
   <div class="modal-header d-flex align-items-center">
-    <p class="fw-bold m-0"> Usuari: {{ user?.username }}</p>
+    <p class="fw-bold m-0"> Usuari: {{ (user$ | async)?.username }}</p>
     <button type="button" class="btn-close" aria-label="tancar" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body d-flex justify-content-center gap-3">

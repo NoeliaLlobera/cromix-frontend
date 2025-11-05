@@ -1,8 +1,8 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {lastValueFrom, Observable} from "rxjs";
-import {COLLECTIONS_ENDPOINTS} from "../../core/constants/api";
-import {CollectionDTO} from "../../core/models/collectionDTO";
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from '@angular/core';
+import { firstValueFrom } from "rxjs";
+import { COLLECTIONS_ENDPOINTS } from "../../core/constants/api";
+import { CollectionDTO } from "../../core/models/collectionDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +10,17 @@ import {CollectionDTO} from "../../core/models/collectionDTO";
 export class HomeService {
   private readonly http: HttpClient = inject(HttpClient);
 
-  getCollections(): Observable<CollectionDTO[]> {
-    return this.http.get<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.GET);
+  async getCollections(): Promise<CollectionDTO[]> {
+    return await firstValueFrom(this.http.get<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.GET));
   }
 
-  postCollection(collection: CollectionDTO): Observable<CollectionDTO[]> {
-    return this.http.post<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.CREATE, collection);
+  async postCollection(collection: CollectionDTO): Promise<CollectionDTO[]> {
+    const result = await firstValueFrom(this.http.post<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.CREATE, collection));
+    return await this.getCollections();
   }
 
-  deleteCollection(collection_id: string): Observable<CollectionDTO[]> {
-    return this.http.delete<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.DELETE(collection_id));
+  async deleteCollection(collection_id: string): Promise<CollectionDTO[]> {
+    await firstValueFrom(this.http.delete<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.DELETE(collection_id)));
+    return await this.getCollections();
   }
 }

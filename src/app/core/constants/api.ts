@@ -6,8 +6,9 @@ const HOST = HOST_DEV;
 export const USERS_ENDPOINTS = {
   GET: `${HOST}/users`,
   GET_BY_ID: (id: string) => `${HOST}/users/${id}`,
-  CREATE: `${HOST}/users`,
-  LOGIN: `${HOST}/users/login`,
+  CREATE: `${HOST}/register`,
+  LOGIN: `${HOST}/login`,
+  LOGOUT: `${HOST}/logout`,
   DELETE: (id: string) => `${HOST}/users/${id}`,
 }
 
