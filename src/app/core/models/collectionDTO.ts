@@ -1,7 +1,11 @@
 export interface CollectionDTO {
-  collection_id?: string;
+  id?: string;
   collection_name: string;
-  total_cromos?: number;
+  size?: number;
   creator_id: string;
-  users_connected?: number
+  mode: 'digital' | 'print';
+  cards_per_pack?: number;
+  periodicity?: number,
+  bonus?: number[],
+  allow_print?: boolean;
 }
