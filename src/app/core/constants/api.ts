@@ -12,18 +12,25 @@ export const USERS_ENDPOINTS = {
   DELETE: (id: string) => `${HOST}/users/${id}`,
 }
 
+export const AUTH_ENDPOINTS = {
+  LOGIN: `${HOST}/login`,
+  REGISTER: `${HOST}/register`,
+  LOGOUT: `${HOST}/logout`,
+}
+
 export const COLLECTIONS_ENDPOINTS = {
   GET: `${HOST}/collections`,
   GET_BY_ID: (id: string) => `${HOST}/collections/${id}`,
   CREATE: `${HOST}/collections`,
   DELETE: (id: string) => `${HOST}/collections/${id}`,
+  UPDATE: (id: string) => `${HOST}/collections/${id}`,
 }
 
 export const CROMO_TYPES_ENDPOINTS = {
-  GET_BY_COLLECTION_ID: (collectionId: string) => `${HOST}/cromo-type/${collectionId}`,
-  CREATE: `${HOST}/cromo-type`,
-  DELETE: (id: string) => `${HOST}/cromo-type/${id}`,
-  UPDATE: (id: string) => `${HOST}/cromo-type/${id}`,
+  GET_BY_COLLECTION_ID: (collectionId: string) => `${HOST}/cromotype/${collectionId}`,
+  CREATE: `${HOST}/cromotype`,
+  DELETE: (id: string) => `${HOST}/cromotype/${id}`,
+  UPDATE: (id: string) => `${HOST}/cromotype/${id}`,
 }
 
 

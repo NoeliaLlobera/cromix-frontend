@@ -27,33 +27,26 @@ export const routes: Routes = [
     path: 'home',
     title: 'home.title',
     loadComponent: () => import('./home/views/home/home.component').then(c => c.HomeComponent),
-    canMatch: [AuthGuard],
+    // canMatch: [AuthGuard],
   },
   {
     path: 'edit/:id',
     title: 'edit-collection.title',
-    canMatch: [AuthGuard],
+    // canMatch: [AuthGuard],
     loadComponent: () => import('./edit-collection/views/edit-collection/edit-collection.component').then(c => c.EditCollectionComponent),
   },
   {
     path: 'printPage/:id',
     title: 'print-page.title',
-    canMatch: [AuthGuard],
+    // canMatch: [AuthGuard],
     loadComponent: () => import('./edit-collection/views/print-page/print-page.component').then(c => c.PrintPageComponent),
-    providers: [
-      provideState('cromos', cromosReducer),
-      provideEffects(CromosEffects)
-    ]
+
   },
   {
     path: 'preview/:collectionId',
     title: 'preview.title',
-    canMatch: [AuthGuard],
+    // canMatch: [AuthGuard],
     loadComponent: () => import('./preview-cards/views/preview-cards/preview-cards.component').then(c => c.PreviewCardsComponent),
-    providers: [
-      provideState('cromos', cromosReducer),
-      provideEffects(CromosEffects)
-    ]
   },
   {
     path: '**',

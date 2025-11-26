@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from "rxjs";
-import { COLLECTIONS_ENDPOINTS } from "../../core/constants/api";
+import {COLLECTIONS_ENDPOINTS, CROMO_TYPES_ENDPOINTS} from "../../core/constants/api";
 import { CollectionDTO } from "../../core/models/collectionDTO";
 import { CromoTypeDTO } from "../../core/models/cromo-typeDTO";
 
@@ -17,9 +17,9 @@ export class EditCollectionService {
     );
   }
 
-  async getCromos(collection_id: string): Promise<CromoTypeDTO[]> {
+  async getCromos(collection_id: string): Promise<any> {
     return await firstValueFrom(
-      this.http.get<CromoTypeDTO[]>(`${COLLECTIONS_ENDPOINTS.GET}/${collection_id}/cromos`)
+      this.http.get<CromoTypeDTO[]>(`${CROMO_TYPES_ENDPOINTS.GET_BY_COLLECTION_ID(collection_id)}`)
     );
   }
 

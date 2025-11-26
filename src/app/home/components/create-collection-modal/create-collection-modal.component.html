@@ -2,13 +2,76 @@
   <h4 class="modal-title">Crear nova col·lecció</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
-<form class="modal-body ">
-  <div class="col-md-6">
-    <label for="input" class="form-label">Nom de la col·lecció</label>
-    <input class="form-control " type="text" id="input" [formControl]="control">
+<form [formGroup]="form" (ngSubmit)="save()" class="modal-body">
+  <div class="modal-header">
+    <h4 class="modal-title">Crear nova col·lecció</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
+
+  <div class="row g-3">
+    <div class="col-md-12">
+      <label class="form-label">Nom de la col·lecció</label>
+      <input class="form-control" type="text" formControlName="collection_name">
+      <div class="text-danger small" *ngIf="form.get('collection_name')?.touched && form.get('collection_name')?.invalid">
+        Nom requerit.
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Creator (id)</label>
+      <input class="form-control" type="text" formControlName="creator_id">
+      <div class="text-danger small" *ngIf="form.get('creator_id')?.touched && form.get('creator_id')?.invalid">
+        Creator id requerit.
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label d-block">Mode</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" formControlName="mode" [value]="'digital'" id="modeDigital">
+        <label class="form-check-label" for="modeDigital">Digital</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" formControlName="mode" [value]="'print'" id="modePrint">
+        <label class="form-check-label" for="modePrint">Print</label>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Mida (size)</label>
+      <input class="form-control" type="number" formControlName="size" min="0">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Cards per pack</label>
+      <input class="form-control" type="number" formControlName="cards_per_pack" min="1" [readonly]="form.get('mode')?.value === 'print'">
+      <div class="text-danger small" *ngIf="form.get('cards_per_pack')?.touched && form.get('cards_per_pack')?.invalid && form.get('mode')?.value === 'digital'">
+        Aquesta dada és obligatòria per a mode digital i ha de ser >= 1.
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Periodicitats (periodicity)</label>
+      <input class="form-control" type="number" formControlName="periodicity" min="1" [readonly]="form.get('mode')?.value === 'print'">
+      <div class="text-danger small" *ngIf="form.get('periodicity')?.touched && form.get('periodicity')?.invalid && form.get('mode')?.value === 'digital'">
+        Aquesta dada és obligatòria per a mode digital i ha de ser >= 1.
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Bonus (coma-separats, ex: 1,2,3)</label>
+      <input class="form-control" type="text" formControlName="bonus" placeholder="1,2,3">
+      <div class="form-text">Per ara s'introdueix com a llista separada per comes; el component TS pot convertir-ho a array si cal.</div>
+    </div>
+
+    <div class="col-md-12 form-check">
+      <input class="form-check-input" type="checkbox" formControlName="allow_print" id="allowPrint">
+      <label class="form-check-label" for="allowPrint">Permetre impressió (allow_print)</label>
+    </div>
+  </div>
+
   <div class="d-flex justify-content-center gap-4 my-4">
     <button type="button" class="btn btn-dark" (click)="dismiss()">{{ 'common.buttons.cancel' | translate }}</button>
-    <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!control.valid">{{ 'common.buttons.save' | translate }}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">{{ 'common.buttons.save' | translate }}</button>
   </div>
 </form>
