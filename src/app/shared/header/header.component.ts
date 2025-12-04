@@ -39,7 +39,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    // this.store.dispatch(logout())
+    localStorage.removeItem('user');
     this.loginService.logout();
     this.startPage = '';
     this.modalService.dismissAll();

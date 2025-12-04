@@ -1,6 +1,7 @@
 export interface CollectionDTO {
   id?: string;
   collection_name: string;
+  collection_id: string;
   size?: number;
   creator_id: string;
   mode: 'digital' | 'print';

@@ -60,6 +60,7 @@ export class LoginComponent {
     } else if (this.mode === 'register') {
       if (loginData.password !== loginData.confirmPassword) {
         this.growlService.setGrowlMessage({ message: 'login.errors.pasword-match', type: 'danger' });
+        this.router.navigate(['/home']).then();
         return;
       }
 

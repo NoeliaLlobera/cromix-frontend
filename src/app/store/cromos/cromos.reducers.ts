@@ -15,7 +15,7 @@ import { CromoTypeDTO } from "../../core/models/cromo-typeDTO";
 export interface CromosState {
   isLoading: boolean;
   error: string | null;
-  collection: CollectionDTO;
+  collection: any;
   cromo_types: CromoTypeDTO[];
 }
 

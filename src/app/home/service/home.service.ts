@@ -10,16 +10,21 @@ import { CollectionDTO } from "../../core/models/collectionDTO";
 export class HomeService {
   private readonly http: HttpClient = inject(HttpClient);
 
-  async getCollections(): Promise<CollectionDTO[]> {
-    return await firstValueFrom(this.http.get<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.GET));
+  async getCollections(): Promise<CollectionDTO[] | null> {
+    try {
+      return await firstValueFrom(this.http.get<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.GET));
+    } catch (e) {
+      return null;
+      console.warn(e);
+    }
   }
 
-  async postCollection(collection: CollectionDTO): Promise<CollectionDTO[]> {
+  async postCollection(collection: any): Promise<CollectionDTO[] | null> {
     const result = await firstValueFrom(this.http.post<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.CREATE, collection));
     return await this.getCollections();
   }
 
-  async deleteCollection(collection_id: string): Promise<CollectionDTO[]> {
+  async deleteCollection(collection_id: string): Promise<CollectionDTO[] | null> {
     await firstValueFrom(this.http.delete<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.DELETE(collection_id)));
     return await this.getCollections();
   }

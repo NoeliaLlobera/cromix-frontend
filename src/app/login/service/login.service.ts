@@ -60,6 +60,7 @@ export class LoginService {
 
   async logout() {
     await firstValueFrom(this.http.post(USERS_ENDPOINTS.LOGOUT, {}));
+    this.setUser(null);
     await this.router.navigateByUrl('/login');
   }
 }

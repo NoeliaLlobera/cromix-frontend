@@ -1,41 +1,46 @@
 @if (isLoading) {
-<app-loader></app-loader>
+  <app-loader></app-loader>
 }
 
-<div class="d-flex justify-content-between mt-3">
+<div class="d-flex justify-content-between my-3">
   <div>
-    <h1>{{ (collection).collection_name | translate }}</h1>
+    <h1>{{ collection.collection_name | translate }}</h1>
   </div>
   <div>
+    <button class="btn btn-dark me-2" aria-label="collection configuration" (click)="openCollectionConfig(collection)">
+      <i class="bi-pencil-square icon"></i>
+    </button>
     <button class="btn btn-dark" routerLink="/home">Enrere</button>
   </div>
 </div>
 
 @if ((cromoTypes).length === 0) {
-<div class="alert alert-warning mt-3" role="alert">
-  Encara no s'ha creat cap cromo. Podeu començar a afegir-ne amb el botó de sota.
-</div>
-} @else {
-<div class="border border-primary p-4 rounded-4 d-flex gap-2 justify-content-start flex-wrap">
-  @for (cromoType of (cromoTypes); track $index) {
-  <div class="image-container p-0 m-0">
-    <img class="cromo-image" [src]="cromoType.image">
-    <button class="overlay-button border-0 rounded-4" (click)="modifyCromoType(cromoType)">
-      <i class="bi-pencil-square icon-big"></i>
-    </button>
+  <div class="alert alert-warning mt-3" role="alert">
+    Encara no s'ha creat cap cromo. Podeu començar a afegir-ne amb el botó de sota.
   </div>
-  }
-</div>
+} @else {
+  <div class="border border-primary p-4 rounded-4 d-flex gap-2 justify-content-start flex-wrap">
+    @for (cromoType of (cromoTypes); track $index) {
+      <div class="image-container p-0 m-0">
+        <img class="cromo-image" [src]="cromoType.image">
+        <button class="overlay-button border-0 rounded-4" (click)="modifyCromoType(cromoType)">
+          <i class="bi-pencil-square icon-big"></i>
+        </button>
+      </div>
+    }
+  </div>
 }
 <div class="my-4">
   <div class="row">
     <div class="col-lg-2 col-md-3 g-1">
       <button class="btn btn-dark col-12" (click)="printPage()" [disabled]="(cromoTypes).length === 0">Generar
-        imprimible</button>
+        imprimible
+      </button>
     </div>
     <div class="col-lg-2 col-md-3 g-1">
       <button class="btn btn-dark col-12" (click)="preview()" [disabled]="(cromoTypes).length === 0">Previsualitzar
-        cromos</button>
+        cromos
+      </button>
     </div>
     <div class="col-lg-6 col-md-3 g-1"></div>
     <div class="col-lg-2  col-md-3 g-1">

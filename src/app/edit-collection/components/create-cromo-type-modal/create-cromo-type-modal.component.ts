@@ -14,7 +14,7 @@ import {CromoTypeDTO} from "../../../core/models/cromo-typeDTO";
   styleUrl: './create-cromo-type-modal.component.scss'
 })
 export class CreateCromoTypeModalComponent implements OnInit {
-  @Input() family_id!: string;
+  @Input() collection_id!: string;
   @Input() cromoType!: CromoTypeDTO;
   @Input() title!: string;
   @Input() mode!: 'create' | 'edit';
@@ -28,13 +28,16 @@ export class CreateCromoTypeModalComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.cromoType);
     this.form = this.fb.group({
       name: new FormControl('', [Validators.required]),
       image: new FormControl(undefined, [Validators.required]),
-      family_id: new FormControl(`${this.family_id}`, [Validators.required])
+      collection_id: new FormControl(`${this.collection_id}`, [Validators.required])
     });
 
+    console.log(this.mode);
     if(this.mode === 'edit'){
+      console.log(this.cromoType);
       this.form.patchValue(this.cromoType);
       this.form.get('image')?.setValue(this.cromoType.base_image);
       this.generatePrevisualization();
@@ -71,6 +74,7 @@ export class CreateCromoTypeModalComponent implements OnInit {
 
   generatePrevisualization() {
     this.form.disable();
+    console.log(this.form.value);
     this.previewImage = {image: this.form.value.image, title: this.form.value.name};
   }
 
@@ -87,7 +91,7 @@ export class CreateCromoTypeModalComponent implements OnInit {
           name: this.form.value.name,
           image: this.cromoImgString,
           base_image: this.imgString,
-          family_id: this.form.value.family_id,
+          collection_id: this.form.value.collection_id,
         });
       });
     }
