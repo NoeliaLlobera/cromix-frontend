@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   private modalService: NgbModal = inject(NgbModal);
   private readonly router: Router = inject(Router);
   private readonly service: HomeService = inject(HomeService);
-  collections!: CollectionDTO[];
+  collections!: any[] | null;
   modeCollector: WritableSignal<boolean> = signal(false);
   isLoading = false;
 
@@ -38,9 +38,10 @@ export class HomeComponent implements OnInit {
       await this.modalService.open(CreateCollectionModalComponent, {size: 'lg', centered: true}).result;
     const user = JSON.parse(localStorage.getItem('user')!);
     const collection = {
-      collection_name: result,
+      ...result,
       creator_id: user.id
     }
+    console.log(collection);
     this.collections = await this.service.postCollection(collection);
   }
 

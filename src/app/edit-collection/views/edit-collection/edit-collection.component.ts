@@ -12,6 +12,10 @@ import {
   CreateCromoTypeModalComponent
 } from "../../components/create-cromo-type-modal/create-cromo-type-modal.component";
 import { EditCollectionService } from "../../services/edit-collection.service";
+import {JsonPipe} from "@angular/common";
+import {
+  CreateCollectionModalComponent
+} from "../../../home/components/create-collection-modal/create-collection-modal.component";
 
 @Component({
   selector: 'app-edit-collection',
@@ -20,6 +24,7 @@ import { EditCollectionService } from "../../services/edit-collection.service";
     ReactiveFormsModule,
     RouterLink,
     LoaderComponent,
+    JsonPipe,
   ],
   templateUrl: './edit-collection.component.html',
   styleUrl: './edit-collection.component.scss'
@@ -62,25 +67,26 @@ export class EditCollectionComponent implements OnInit {
     modal.componentInstance.family_id = this.collectionId;
     modal.componentInstance.title = 'Crear nou cromo';
     modal.componentInstance.mode = 'create';
-    
+
     try {
       const result = await modal.result;
-      this.cromoTypes = await this.service.createCromo({ ...result, family_id: this.collectionId });
+      this.cromoTypes = await this.service.createCromo({ ...result, collection_id: this.collectionId });
     } catch {
       // Modal dismissed
     }
   }
 
   async modifyCromoType(cromoType: CromoTypeDTO) {
+    console.log(cromoType);
     const modal = this.modalService.open(CreateCromoTypeModalComponent, { size: 'xl', centered: true });
     modal.componentInstance.family_id = this.collectionId;
     modal.componentInstance.cromoType = cromoType;
     modal.componentInstance.title = 'Modificar cromo';
     modal.componentInstance.mode = 'edit';
-    
+
     try {
       const result = await modal.result;
-      
+
       if (result !== 'delete') {
         this.cromoTypes = await this.service.updateCromo({ ...cromoType, ...result });
       } else {
@@ -108,5 +114,21 @@ export class EditCollectionComponent implements OnInit {
 
   preview() {
     this.router.navigate([`/preview/${this.collectionId}`]).then();
+  }
+
+  async openCollectionConfig(data: CollectionDTO) {
+    const modal =
+      await this.modalService.open(CreateCollectionModalComponent, {size: 'lg', centered: true });
+    modal.componentInstance.data = data;
+    const result = await modal.result;
+
+    const user = JSON.parse(localStorage.getItem('user')!);
+    const collection = {
+      ...result,
+      creator_id: user.id
+    }
+    //  TODO API CALL TO UPDATE COLLECTION
+    console.log(collection);
+
   }
 }
