@@ -27,13 +27,13 @@ export class LoginService {
   get user$(): Observable<UserDTO | null> {
     return this._user.asObservable();
   };
-  setUser(user: UserDTO | null): void {
-    this._user.next(user);
+  setUser(user: { token: string; user: UserDTO } | null): void {
+    this._user.next(user?.user || null);
   }
 
   async loginAction(loginData: IloginModel) {
-    const login = await this.login(loginData);
-    localStorage.setItem('user', JSON.stringify(login));
+    const login: { token: string; user: UserDTO } = await this.login(loginData);
+    localStorage.setItem('access_token', login.token);
     this.setUser(login);
     this.growlService.setGrowlMessage({ message: 'login.success', type: 'success' });
 
@@ -54,8 +54,8 @@ export class LoginService {
     return firstValueFrom(this.http.post<IloginModel>(USERS_ENDPOINTS.CREATE, loginData));
   }
 
-  login(loginData: IloginModel): Promise<UserDTO> {
-    return firstValueFrom(this.http.post<UserDTO>(USERS_ENDPOINTS.LOGIN, loginData));
+  login(loginData: IloginModel): Promise<{ token: string, user: UserDTO }> {
+    return firstValueFrom(this.http.post<{ token: string, user: UserDTO }>(USERS_ENDPOINTS.LOGIN, loginData));
   }
 
   async logout() {
