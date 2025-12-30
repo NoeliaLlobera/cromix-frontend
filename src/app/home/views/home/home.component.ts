@@ -9,12 +9,16 @@ import {
   CreateCollectionModalComponent
 } from "../../components/create-collection-modal/create-collection-modal.component";
 import {HomeService} from '../../service/home.service';
+import {CollectorCollectionListComponent} from "../../../collector-collection-list/collector-collection-list.component";
+import {CreatorCollectionListComponent} from "../../../creator-collection-list/creator-collection-list.component";
 
 @Component({
   selector: 'app-home',
   imports: [
     TranslatePipe,
     LoaderComponent,
+    CollectorCollectionListComponent,
+    CreatorCollectionListComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
