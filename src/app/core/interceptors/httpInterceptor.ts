@@ -54,7 +54,6 @@ export function HttpInterceptor(
       } else if (error.error?.message) {
         errorMessage = error.error.message;
       }
-
       growlService.setGrowlMessage({message: errorMessage, type: 'danger'});
 
       const status = error.status;

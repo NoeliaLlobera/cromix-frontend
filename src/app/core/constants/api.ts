@@ -34,4 +34,10 @@ export const CROMO_TYPES_ENDPOINTS = {
   UPDATE: (id: string) => `${HOST}/cromotype/${id}`,
 }
 
+export const COLLECTING_USERS_ENDPOINTS = {
+  ADD_USER_TO_COLLECTION: `${HOST}/collecting-users`,
+  REMOVE_USER_FROM_COLLECTION: (id: string) => `${HOST}/collecting-users/${id}`,
+  GET_USERS_BY_COLLECTION: (collectionId: string) => `${HOST}/collecting-users/collection/${collectionId}`,
+  GET_COLLECTIONS_BY_USER: (userId: string) => `${HOST}/collecting-users/user/${userId}`,
+}
 

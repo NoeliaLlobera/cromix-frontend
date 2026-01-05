@@ -1,7 +1,16 @@
-<div class=" my-3 empty box">
-  <p class="text-primary">{{ 'collector.empty-list' | translate }}</p>
-</div>
-
+@if (collectionsSubscribed.length > 0) {
+  <div class="row mb-4">
+    @for (collection of collectionsSubscribed; track collection.collection_id) {
+      <div class="col-md-3">
+        <app-collection-card [collection]="collection" (deleteEvent)="onDelete($event)"></app-collection-card>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="my-3 empty box">
+    <p class="text-primary">{{ 'collector.empty-list' | translate }}</p>
+  </div>
+}
 
 <h4>{{ 'collector.search-title' | translate }}</h4>
 <div class="box my-2">
@@ -26,7 +35,7 @@
                 <button class="btn btn-primary"><i
                   class="bi-eye"></i></button>
                 <button class="btn btn-secondary"><i
-                  class="bi-plus-circle"></i></button>
+                  class="bi-plus-circle" (click)="subscribe(item.collection_id)"></i></button>
               </div>
             </div>
           </div>
