@@ -20,6 +20,7 @@ export const AUTH_ENDPOINTS = {
 
 export const COLLECTIONS_ENDPOINTS = {
   GET: `${HOST}/collections`,
+  GET_ALL: `${HOST}/collections/all`,
   GET_BY_ID: (id: string) => `${HOST}/collections/${id}`,
   CREATE: `${HOST}/collections`,
   DELETE: (id: string) => `${HOST}/collections/${id}`,

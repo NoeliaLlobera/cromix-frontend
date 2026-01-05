@@ -1,4 +1,11 @@
 {
+  "collector": {
+    "by": "Per",
+    "cromos": "Num. cromos",
+    "empty-list": "Encara no us heu subscrit a cap col·lecció",
+    "not-found": "No hi ha resultats per aquesta cerca",
+    "search-title": "Cerca col·leccions"
+  },
   "common": {
     "buttons": {
       "cancel": "Cancel·lar",
@@ -21,6 +28,7 @@
   "form": {
     "buttons": {
       "add-collection": "Crear col·lecció",
+      "search": "Cerca",
       "search-collection": "Cerca col·lecció"
     }
   },

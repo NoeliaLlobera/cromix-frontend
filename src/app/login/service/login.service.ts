@@ -34,6 +34,7 @@ export class LoginService {
   async loginAction(loginData: IloginModel) {
     const login: { token: string; user: UserDTO } = await this.login(loginData);
     localStorage.setItem('access_token', login.token);
+    localStorage.setItem('user', JSON.stringify(login.user));
     this.setUser(login);
     this.growlService.setGrowlMessage({ message: 'login.success', type: 'success' });
 
