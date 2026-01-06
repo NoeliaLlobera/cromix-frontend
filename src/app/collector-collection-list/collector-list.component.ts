@@ -7,10 +7,11 @@ import {CollectionCardComponent} from "../shared/components/collection-card/coll
 import {ConfirmationModalComponent} from "../shared/components/confirmation-modal/confirmation-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CardListSkeletonComponent} from "../shared/skeletons/card-list-skeleton/card-list-skeleton.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-collector-list',
-  imports: [FormsModule, FormsModule, TranslatePipe, JsonPipe, CollectionCardComponent, CardListSkeletonComponent],
+  imports: [FormsModule, FormsModule, TranslatePipe, JsonPipe, CollectionCardComponent, CardListSkeletonComponent, RouterLink],
   templateUrl: './collector-list.component.html',
   styleUrl: './collector-list.component.scss'
 })

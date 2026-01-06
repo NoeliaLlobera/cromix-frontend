@@ -49,6 +49,12 @@ export const routes: Routes = [
     loadComponent: () => import('./preview-cards/views/preview-cards/preview-cards.component').then(c => c.PreviewCardsComponent),
   },
   {
+    path: 'detail/:collectionId',
+    title: 'preview.title',
+    // canMatch: [AuthGuard],
+    loadComponent: () => import('./preview-cards/views/preview-cards/preview-cards.component').then(c => c.PreviewCardsComponent),
+  },
+  {
     path: '**',
     component: LandingComponent
   },

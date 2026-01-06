@@ -77,6 +77,10 @@
   "preview": {
     "title": "Previsualització"
   },
+  "preview-cards": {
+    "go-back": "Tornar",
+    "no-cromos": "Aquesta col·lecció encara no té cromos."
+  },
   "signup": {
     "title": "Crea el teu compte"
   },
