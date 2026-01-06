@@ -2,8 +2,9 @@ import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CromoTypeDTO} from "../../../core/models/cromo-typeDTO";
 import {TranslatePipe} from "@ngx-translate/core";
-import {PreviewCardsService} from "./preview-cards.service";
+import {CardsListService} from "./service/cards-list.service";
 import {LoaderComponent} from "../../../shared/components/loader/loader.component";
+import {CollectionDTO} from "../../../core/models/collectionDTO";
 
 @Component({
   selector: 'app-preview-cards',
@@ -11,21 +12,24 @@ import {LoaderComponent} from "../../../shared/components/loader/loader.componen
     TranslatePipe,
     LoaderComponent,
   ],
-  templateUrl: './preview-cards.component.html',
-  styleUrl: './preview-cards.component.scss'
+  templateUrl: './cards-list.component.html',
+  styleUrl: './cards-list.component.scss'
 })
-export class PreviewCardsComponent implements OnInit {
+export class CardsListComponent implements OnInit {
   protected route: ActivatedRoute = inject(ActivatedRoute);
   private readonly router: Router = inject(Router);
   cromos: WritableSignal<CromoTypeDTO[] | null> = signal(null);
   index: number = 0;
   mode!: string;
+  collection!: CollectionDTO;
 
-  private readonly service: PreviewCardsService = inject(PreviewCardsService);
+  private readonly service: CardsListService = inject(CardsListService);
+  protected packAvailable: boolean = false;
 
 
   ngOnInit() {
-    this.getCromos().then();
+    this.getCromos().then()
+    this.getCollection().then();
 
     if (this.route.snapshot.url[0].path) {
       this.mode = this.route.snapshot.url[0].path;
@@ -37,6 +41,9 @@ export class PreviewCardsComponent implements OnInit {
 
   async getCromos() {
     this.cromos.set(await this.service.getCromosByCollectionId(this.route.snapshot.params['collectionId']));
+  }
+  async getCollection() {
+    this.collection = await this.service.getCollectionById(this.route.snapshot.params['collectionId']);
   }
 
   nextCard() {
@@ -58,9 +65,15 @@ export class PreviewCardsComponent implements OnInit {
   async back() {
     if (this.mode === 'preview') await this.router.navigate(['edit', `${this.route.snapshot.params['collectionId']}`]);
     if(this.mode === 'detail') await this.router.navigate(['/home']);
+    await this.router.navigate(['/home']);
   }
 
   protected goToCard(i: number) {
     this.index = i;
+
+  }
+
+  protected newPack() {
+
   }
 }

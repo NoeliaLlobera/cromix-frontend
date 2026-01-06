@@ -1,0 +1,48 @@
+
+.deck-container {
+  --deck-height: 400px;
+}
+
+.cromo {
+  height: var(--deck-height);
+  z-index: 9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.cromo:hover {
+  transform: translateY(-10px);
+}
+
+.deck {
+  width: calc(var(--deck-height) * 0.7);
+  height: var(--deck-height);
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 8;
+  scale: 0.95;
+}
+
+i{
+  font-size: 2.5rem;
+}
+.arr{
+  background-color: unset;
+  border: unset;
+}
+
+.preview-thumbnails{
+  border: 3px solid var(--primary);
+  border-radius: 12px;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  scrollbar-width: thin;
+}
+.thumbnail{
+  height: 180px;
+  cursor: pointer;
+}
+.thumbnail:hover {
+  transform: translateY(-5px);
+}

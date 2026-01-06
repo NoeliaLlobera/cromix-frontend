@@ -1,10 +1,5 @@
-import { Routes } from '@angular/router';
-import { provideEffects } from "@ngrx/effects";
-import { provideState } from "@ngrx/store";
-import { AuthGuard } from "./core/guard/auth.guard";
-import { LandingComponent } from "./landing/views/landing/landing.component";
-import { CromosEffects } from "./store/cromos/cromos.effects";
-import { cromosReducer } from "./store/cromos/cromos.reducers";
+import {Routes} from '@angular/router';
+import {LandingComponent} from "./landing/views/landing/landing.component";
 
 export const routes: Routes = [
   {
@@ -53,6 +48,12 @@ export const routes: Routes = [
     title: 'preview.title',
     // canMatch: [AuthGuard],
     loadComponent: () => import('./preview-cards/views/preview-cards/preview-cards.component').then(c => c.PreviewCardsComponent),
+  },
+  {
+    path: ':collectionId',
+    title: '',
+    // canMatch: [AuthGuard],
+    loadComponent: () => import('./cards-list/views/preview-cards/cards-list.component').then(c => c.CardsListComponent),
   },
   {
     path: '**',

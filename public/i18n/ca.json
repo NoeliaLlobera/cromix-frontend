@@ -17,6 +17,7 @@
     },
     "errors": {
       "ER_DUP_ENTRY": "Ja existeix un usuari amb aquest correu electrònic.",
+      "INVALID_PASSWORD": "Contrasenya incorrecta",
       "UNAUTHORIZED": "Iniceu sessió per accedir a aquest recurs",
       "USER_NOT_FOUND": "No s'ha trobat cap usuari amb les dades informades",
       "undefined": "S'ha produït un error intern. Si us plau, torna-ho a intentar més tard."
@@ -41,7 +42,7 @@
   },
   "home": {
     "common": {
-      "mode-switch-collector": "Mode col·leccionista",
+      "mode-switch-collector": "Canviar mode coleccionista/creador",
       "mode-switch-creator": "Mode creador"
     },
     "creator": {
@@ -61,6 +62,12 @@
     "new-collection-button": "Crea la teva pròpia col·lecció",
     "register-button": "Crea el teu compte"
   },
+  "list": {
+    "creator": "Creador",
+    "creator ": "Creador",
+    "progress": "Progrés",
+    "title": "Títol"
+  },
   "login": {
     "errors": {
       "field-required": "Camp obligatori",
@@ -70,7 +77,7 @@
     },
     "password": "Contrasenya",
     "password-confirm": "Confirmar contrasenya",
-    "success": "Usuari creat correctament",
+    "success": "Sessió iniciada",
     "title": "Inicia sessió",
     "username": "Correu electrònic"
   },
