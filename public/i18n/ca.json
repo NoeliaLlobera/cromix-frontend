@@ -28,6 +28,7 @@
   "form": {
     "buttons": {
       "add-collection": "Crear col·lecció",
+      "create-collection": "Crear col·lecció",
       "search": "Cerca",
       "search-collection": "Cerca col·lecció"
     }

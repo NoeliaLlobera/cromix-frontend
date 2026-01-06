@@ -26,9 +26,8 @@ import {CollectorListComponent} from "../../../collector-collection-list/collect
 export class HomeComponent implements OnInit {
   private modalService: NgbModal = inject(NgbModal);
   private readonly router: Router = inject(Router);
-  private readonly service: HomeService = inject(HomeService);
+  protected readonly service: HomeService = inject(HomeService);
   collections!: any[] | null;
-  modeCollector: WritableSignal<boolean> = signal(false);
 
   async ngOnInit() {
     this.collections = await this.service.getCollections();

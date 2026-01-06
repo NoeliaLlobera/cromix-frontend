@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import { firstValueFrom } from "rxjs";
 import { COLLECTIONS_ENDPOINTS } from "../../core/constants/api";
 import { CollectionDTO } from "../../core/models/collectionDTO";
@@ -9,6 +9,7 @@ import { CollectionDTO } from "../../core/models/collectionDTO";
 })
 export class HomeService {
   private readonly http: HttpClient = inject(HttpClient);
+  modeCollector: WritableSignal<boolean> = signal(false);
 
   async getCollections(): Promise<CollectionDTO[] | null> {
 

@@ -3,14 +3,14 @@
     <h1>{{ 'home.creator.title' | translate }}</h1>
   </div>
   <div class="form-check form-switch">
-    <button class="btn btn-light" (click)="modeCollector.set(!modeCollector())">{{ 'home.common.mode-switch-collector' | translate
-      }}</button>
+    <button class="btn btn-light" (click)="service.modeCollector.set(!service.modeCollector())">{{
+        'home.common.mode-switch-collector' | translate
+      }}
+    </button>
   </div>
 </div>
-
-
-  @if (modeCollector()){
-    <app-creator-list></app-creator-list>
-  } @else {
-    <app-collector-list></app-collector-list>
-  }
+@if (service.modeCollector()) {
+  <app-creator-list></app-creator-list>
+} @else {
+  <app-collector-list></app-collector-list>
+}
