@@ -6,10 +6,11 @@ import {JsonPipe} from "@angular/common";
 import {CollectionCardComponent} from "../shared/components/collection-card/collection-card.component";
 import {ConfirmationModalComponent} from "../shared/components/confirmation-modal/confirmation-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CardListSkeletonComponent} from "../shared/skeletons/card-list-skeleton/card-list-skeleton.component";
 
 @Component({
   selector: 'app-collector-list',
-  imports: [FormsModule, FormsModule, TranslatePipe, JsonPipe, CollectionCardComponent],
+  imports: [FormsModule, FormsModule, TranslatePipe, JsonPipe, CollectionCardComponent, CardListSkeletonComponent],
   templateUrl: './collector-list.component.html',
   styleUrl: './collector-list.component.scss'
 })
@@ -20,6 +21,7 @@ export class CollectorListComponent implements OnInit {
   private readonly service: CollectorListService = inject(CollectorListService);
   protected collectionsList: any[] = [];
   protected collectionsSubscribed: any[] = [];
+  protected loaded: boolean = false;
 
   ngOnInit() {
     this.getCollections().then();
@@ -44,7 +46,9 @@ export class CollectorListComponent implements OnInit {
   }
 
   async getCollections() {
+    this.loaded = false;
     this.collectionsSubscribed = await this.service.getUserCollections();
+    this.loaded = true;
   }
 
   async onDelete(id: any) {

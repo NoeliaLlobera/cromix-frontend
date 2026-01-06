@@ -11,6 +11,7 @@ export class HomeService {
   private readonly http: HttpClient = inject(HttpClient);
 
   async getCollections(): Promise<CollectionDTO[] | null> {
+
     try {
       return await firstValueFrom(this.http.get<CollectionDTO[]>(COLLECTIONS_ENDPOINTS.GET));
     } catch (e) {

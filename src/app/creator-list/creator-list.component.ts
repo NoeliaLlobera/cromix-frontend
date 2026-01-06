@@ -8,12 +8,14 @@ import {
 } from "../home/components/create-collection-modal/create-collection-modal.component";
 import {ConfirmationModalComponent} from "../shared/components/confirmation-modal/confirmation-modal.component";
 import {CollectionCardComponent} from "../shared/components/collection-card/collection-card.component";
+import {CardListSkeletonComponent} from "../shared/skeletons/card-list-skeleton/card-list-skeleton.component";
 
 @Component({
   selector: 'app-creator-list',
   imports: [
     TranslatePipe,
     CollectionCardComponent,
+    CardListSkeletonComponent,
   ],
   templateUrl: './creator-list.component.html',
   styleUrl: './creator-list.component.scss'
@@ -24,11 +26,15 @@ export class CreatorListComponent implements OnInit {
   private readonly service: HomeService = inject(HomeService);
   collections!: any[] | null;
   isLoading = false;
+  protected loaded: boolean = false;
 
-  async ngOnInit() {
-    this.isLoading = true;
+  ngOnInit() {
+    this.getCollections().then();
+  }
+  async getCollections() {
+    this.loaded = false;
     this.collections = await this.service.getCollections();
-    this.isLoading = false;
+    this.loaded = true
   }
 
   async openModal() {

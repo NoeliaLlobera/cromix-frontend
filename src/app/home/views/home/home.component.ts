@@ -29,12 +29,9 @@ export class HomeComponent implements OnInit {
   private readonly service: HomeService = inject(HomeService);
   collections!: any[] | null;
   modeCollector: WritableSignal<boolean> = signal(false);
-  isLoading = false;
 
   async ngOnInit() {
-    this.isLoading = true;
     this.collections = await this.service.getCollections();
-    this.isLoading = false;
   }
 
   async openModal() {

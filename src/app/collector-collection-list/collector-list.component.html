@@ -1,52 +1,79 @@
-@if (collectionsSubscribed.length > 0) {
-  <div class="row mb-4">
-    @for (collection of collectionsSubscribed; track collection.collection_id) {
-      <div class="col-md-3">
-        <app-collection-card [collection]="collection" (deleteEvent)="onDelete($event)"></app-collection-card>
+@if(loaded){
+  @if (collectionsSubscribed.length > 0) {
+    <div class="row mb-4">
+      @for (collection of collectionsSubscribed; track collection.collection_id) {
+        <div class="col-md-3">
+          <app-collection-card [collection]="collection" (deleteEvent)="onDelete($event)"></app-collection-card>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="my-3 empty box">
+      <p class="text-primary">{{ 'collector.empty-list' | translate }}</p>
+    </div>
+  }
+
+  <h4>{{ 'collector.search-title' | translate }}</h4>
+  <div class="box my-2">
+    <div class="d-flex justify-content-between search-bar">
+      <div class="search-container flex-grow-1">
+        <input type="text" class="form-control search-input" placeholder="Cerca..." [(ngModel)]="searchControl">
+        <i class="fas fa-search search-icon"></i>
       </div>
+      <div>
+        <button class="btn btn-primary" (click)="onSearch()">{{ 'form.buttons.search' | translate }}</button>
+      </div>
+    </div>
+
+    @if (collectionsList.length > 0) {
+      <ul class="list-group my-3">
+        @for (item of collectionsList; track item.collection_id) {
+          <li class="list-group-item">
+            <div class="list-header d-flex justify-content-between">
+              <p>{{ item.collection_name }}</p>
+              <div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary"><i
+                    class="bi-eye"></i></button>
+                  <button class="btn btn-secondary"><i
+                    class="bi-plus-circle" (click)="subscribe(item.collection_id)"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="list-body d-flex gap-5 justify-content-end">
+              <p>{{ 'collector.by' | translate }}: {{ item.creator_user }}</p>
+              <p>{{ 'collector.cromos' | translate }}: {{ item.total_cromos }}</p>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="mt-2 ms-1 mb-0 text-primary">{{ 'collector.not-found' | translate }}</p>
     }
   </div>
+
 } @else {
-  <div class="my-3 empty box">
-    <p class="text-primary">{{ 'collector.empty-list' | translate }}</p>
+  <app-card-list-skeleton></app-card-list-skeleton>
+  <div class="row placeholder-glow my-5">
+    <h5>
+      <span class="placeholder col-4 "></span>
+    </h5>
+    <div>
+    </div>
+    <div class="border 1px solid rounded-1 p-4 my-3">
+      <div class="d-flex justify-content-between search-bar">
+        <div class="search-container flex-grow-1">
+          <span class="placeholder col-12"></span>
+        </div>
+      </div>
+      <div class="my-4" >
+        <span class="placeholder col-12 my-2"></span>
+        <span class="placeholder col-12 my-2"></span>
+        <span class="placeholder col-12 mt-0"></span>
+
+      </div>
+    </div>
   </div>
 }
 
-<h4>{{ 'collector.search-title' | translate }}</h4>
-<div class="box my-2">
-  <div class="d-flex justify-content-between search-bar">
-    <div class="search-container flex-grow-1">
-      <input type="text" class="form-control search-input" placeholder="Cerca..." [(ngModel)]="searchControl">
-      <i class="fas fa-search search-icon"></i>
-    </div>
-    <div>
-      <button class="btn btn-primary" (click)="onSearch()">{{ 'form.buttons.search' | translate }}</button>
-    </div>
-  </div>
 
-  @if (collectionsList.length > 0) {
-    <ul class="list-group my-3">
-      @for (item of collectionsList; track item.collection_id) {
-        <li class="list-group-item">
-          <div class="list-header d-flex justify-content-between">
-            <p>{{ item.collection_name }}</p>
-            <div>
-              <div class="d-flex gap-2">
-                <button class="btn btn-primary"><i
-                  class="bi-eye"></i></button>
-                <button class="btn btn-secondary"><i
-                  class="bi-plus-circle" (click)="subscribe(item.collection_id)"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="list-body d-flex gap-5 justify-content-end">
-            <p>{{ 'collector.by' | translate }}: {{ item.creator_user }}</p>
-            <p>{{ 'collector.cromos' | translate }}: {{ item.total_cromos }}</p>
-          </div>
-        </li>
-      }
-    </ul>
-  } @else {
-    <p class="mt-2 ms-1 mb-0 text-primary">{{ 'collector.not-found' | translate }}</p>
-  }
-</div>
