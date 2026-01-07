@@ -1,4 +1,9 @@
 {
+  "cards-list": {
+    "hide-repeated": "Amagar repetits\n",
+    "no-cromos": "Obriu un sobre per començar la col·lecció",
+    "repeated": "Repetit"
+  },
   "collector": {
     "by": "Per",
     "cromos": "Num. cromos",

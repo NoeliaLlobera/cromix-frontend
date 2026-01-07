@@ -4,27 +4,37 @@
 
   @if (cromos()!.length === 0) {
     <div class="d-flex flex-column justify-content-center align-items-center my-5">
-      <h3 class="text-center text-primary mb-4">{{ 'preview-cards.no-cromos' | translate }}</h3>
-      <button class="btn btn-secondary" (click)="back()">{{ 'preview-cards.go-back' | translate }}</button>
+      <h3 class="text-center text-primary mb-5">{{ 'cards-list.no-cromos' | translate }}</h3>
+      <div class="d-flex gap-3">
+        <button class="btn btn-dark " (click)="back()">{{ 'preview-cards.go-back' | translate }}</button>
+        <button class="btn btn-secondary btn-pulse" (click)="newPack()">Nou sobre
+        </button>
+      </div>
     </div>
   } @else {
-  <h1>{{collection.collection_name}}</h1>
+    <h1>{{ collection.collection_name }}</h1>
     <div class="deck-container">
       <div class="d-flex justify-content-between">
         <h1>{{ this.route.snapshot.title || '' | translate }}</h1>
-
         <div class="d-flex gap-2">
-          <button class="btn btn-secondary" (click)="newPack()" [disabled]="!packAvailable">Nou sobre</button>
-
+          <button class="btn btn-secondary" (click)="newPack()" [disabled]="!packAvailable"
+                  [class.btn-pulse]="packAvailable">Nou sobre
+          </button>
           <button class="btn btn-dark" (click)="back()">Enrere</button>
         </div>
       </div>
 
       <div class="row mt-3">
+        @if (cromos()![index].cardsOfType > 1) {
+          <div class="d-flex justify-content-center">
+            <span
+              class="badge rounded-pill text-bg-primary text-light">{{ 'cards-list.repeated' | translate }} {{ 'x' + cromos()![index].cardsOfType }}</span>
+          </div>
+        }
         <div class="col-12">
           <div class="col-12 d-flex justify-content-center align-items-center position-relative">
             <button class="deck" (click)="nextCard()">
-              <img [src]="cromos()![index].image" alt="" class="cromo border border-light">
+              <img [src]="cromos()![index].cromo_type.image" alt="" class="cromo border border-light">
             </button>
           </div>
           <div class="d-flex gap-2 justify-content-center align-items-center ps-4">
@@ -34,34 +44,45 @@
             <button class="arr" (click)="nextCard()"><i class="bi-arrow-right mx-4"></i></button>
           </div>
         </div>
-        <div class="bg-dark border-dark rounded-3 py-4 px-5 text-light d-flex gap-4 justify-content-between">
+        <div
+          class="bg-primary border-dark rounded-3 py-4 px-5 text-light d-flex flex-wrap gap-4 justify-content-between">
           <div>
-            <h5 class="">{{'list.title' | translate}}</h5>
-            <p class="m-0">{{collection.collection_name}}</p>
+            <h5 class="">{{ 'list.title' | translate }}</h5>
+            <p class="m-0">{{ collection.collection_name }}</p>
           </div>
-          <div >
-            <h5 class="">{{'list.creator' | translate}}</h5>
-            <p class="m-0">{{collection.creator_user}}</p>
+          <div>
+            <h5 class="">{{ 'list.creator' | translate }}</h5>
+            <p class="m-0">{{ collection.creator_user }}</p>
           </div>
-          <div >
-            <h5 class="">{{'list.progress' | translate}}</h5>
-            <p class="m-0">{{cromos()?.length}}/{{collection.total_cromos}}</p>
+          <div>
+            <h5 class="">{{ 'list.progress' | translate }}</h5>
+            <p class="m-0">{{ uniqueCromos.length }}/{{ collection.total_cromos }}</p>
           </div>
-
-
-
         </div>
-
       </div>
-
     </div>
 
-
-    <div class="d-flex overflow-auto my-4 gap-3 pb-2 preview-thumbnails">
+    <div
+      class="form-check form-switch my-2 mt-3 p-0 d-flex  gap-2  fw-bold rounded-3 px-3 py-2 w-fit-content justify-content-end">
+      <input class="form-check-input" type="checkbox" id="hide-repeated" (change)="toggleHideRepeated($event)"
+             [checked]="hideRepseated">
+      <label class="form-check-label " for="hide-repeated">{{ 'cards-list.hide-repeated' | translate }}</label>
+    </div>
+    <div class="d-flex overflow-auto  gap-3 pb-2 preview-thumbnails">
       @for (cromo of cromos(); track cromo.id; let i = $index) {
-        <div class="thumbnail-container" (click)="goToCard(i)">
-          <img [src]="cromo.image" alt="" class="thumbnail border border-light" [class.selected]="i === index">
-        </div>
+        @if (!cromo.hidden) {
+          <div class="position-relative">
+            @if (cromos()![index].cardsOfType > 1) {
+              <div class="d-flex justify-content-end position-absolute start-100 translate-middle">
+                <span class="badge rounded-pill text-bg-primary text-light">{{ 'x' + cromo.cardsOfType }}</span>
+              </div>
+            }
+            <div class="thumbnail-container" (click)="goToCard(i)">
+              <img [src]="cromo.cromo_type.image" alt="" class="thumbnail border border-light"
+                   [class.selected]="i === index">
+            </div>
+          </div>
+        }
       }
     </div>
   }

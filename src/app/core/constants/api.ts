@@ -34,6 +34,13 @@ export const CROMO_TYPES_ENDPOINTS = {
   UPDATE: (id: string) => `${HOST}/cromotype/${id}`,
 }
 
+export const CROMO_ENDPOINTS = {
+  GET_BY_USER_ID: (userId: string, collectionId: string) => `${HOST}/cromo/user/${userId}/${collectionId}`,
+  CREATE: `${HOST}/cromo`,
+  CREATE_MULTIPLE: `${HOST}/cromo/multiple`,
+}
+
+
 export const COLLECTING_USERS_ENDPOINTS = {
   ADD_USER_TO_COLLECTION: `${HOST}/collecting-users`,
   REMOVE_USER_FROM_COLLECTION: (id: string) => `${HOST}/collecting-users/${id}`,
