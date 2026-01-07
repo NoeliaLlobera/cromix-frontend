@@ -5,7 +5,7 @@ export interface CollectionDTO {
   total_cromos?: number;
   creator_id: string;
   creator_user: string;
-  mode: 'digital' | 'print';
+  mode: 'digital' | 'imprimible';
   cards_per_pack?: number;
   periodicity?: number,
   bonus?: number[],

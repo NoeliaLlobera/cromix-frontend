@@ -19,7 +19,7 @@
         <label class="form-check-label" for="modeDigital">Digital</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" formControlName="mode" [value]="'print'" id="modePrint">
+        <input class="form-check-input" type="radio" formControlName="mode" [value]="'imprimible'" id="modePrint">
         <label class="form-check-label" for="modePrint">Print</label>
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div class="col-md-6"></div>
       <div class="col-md-6">
         <label class="form-label">Número de cartes per paquet</label>
-        <input class="form-control" type="number" formControlName="cards_per_pack" min="1" [readonly]="form.get('mode')?.value === 'print'">
+        <input class="form-control" type="number" formControlName="cards_per_pack" min="1" [readonly]="form.get('mode')?.value === 'imprimible'">
         <div class="text-danger small" *ngIf="form.get('cards_per_pack')?.touched && form.get('cards_per_pack')?.invalid && form.get('mode')?.value === 'digital'">
           Aquesta dada és obligatòria per a mode digital i ha de ser >= 1.
         </div>
@@ -36,7 +36,7 @@
 
       <div class="col-md-6">
         <label class="form-label">Periodicitat (hores)</label>
-        <input class="form-control" type="number" formControlName="periodicity" min="1" [readonly]="form.get('mode')?.value === 'print'">
+        <input class="form-control" type="number" formControlName="periodicity" min="1" [readonly]="form.get('mode')?.value === 'imprimible'">
         <div class="text-danger small" *ngIf="form.get('periodicity')?.touched && form.get('periodicity')?.invalid && form.get('mode')?.value === 'digital'">
           Aquesta dada és obligatòria per a mode digital i ha de ser >= 1.
         </div>

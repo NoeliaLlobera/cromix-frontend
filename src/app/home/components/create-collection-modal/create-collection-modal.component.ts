@@ -22,7 +22,7 @@ export class CreateCollectionModalComponent implements OnInit, OnDestroy {
 
   form = this.fb.group({
     collection_name: this.fb.control<string>('', { validators: [Validators.required] }),
-    mode: this.fb.control<'digital' | 'print' | null>(null, { validators: [Validators.required] }),
+    mode: this.fb.control<'digital' | 'imprimible' | null>(null, { validators: [Validators.required] }),
     cards_per_pack: this.fb.control<number | null>(null),
     periodicity: this.fb.control<number | null>(null),
     bonus: this.fb.control<string | null>(null),
