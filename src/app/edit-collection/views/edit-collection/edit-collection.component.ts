@@ -121,14 +121,12 @@ export class EditCollectionComponent implements OnInit {
       await this.modalService.open(CreateCollectionModalComponent, {size: 'lg', centered: true });
     modal.componentInstance.data = data;
     const result = await modal.result;
-
     const user = JSON.parse(localStorage.getItem('user')!);
     const collection = {
       ...result,
-      creator_id: user.id
+      creator_id: user.id,
+      size: this.collection.total_cromos
     }
-    //  TODO API CALL TO UPDATE COLLECTION
-    console.log(collection);
-
+    this.collection = await this.service.updateCollection({...this.collection, ...collection});
   }
 }

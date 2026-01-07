@@ -46,7 +46,6 @@ export class CreatorListComponent implements OnInit {
       ...result,
       creator_id: user.id
     }
-    console.log(collection);
     this.collections = await this.service.postCollection(collection);
   }
 

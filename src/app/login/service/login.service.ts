@@ -43,12 +43,13 @@ export class LoginService {
     return login;
   }
 
-  async signupAction(loginData: IloginModel): Promise<void> {
+  async signupAction(loginData: IloginModel): Promise<any> {
     try {
-      await this.signup(loginData);
+      const signup = await this.signup(loginData);
       await this.loginAction(loginData);
     } catch (error) {
       console.warn('Signup failed', error);
+      return error
     }
   }
 

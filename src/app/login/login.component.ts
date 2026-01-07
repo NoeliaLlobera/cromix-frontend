@@ -54,7 +54,7 @@ export class LoginComponent {
     const loginData: IloginModel = this.form.value;
 
     if (this.mode === 'login') {
-      await this.service.loginAction(loginData);
+      const login = await this.service.loginAction(loginData);
       this.router.navigate(['/home']).then();
 
     } else if (this.mode === 'register') {
@@ -63,8 +63,12 @@ export class LoginComponent {
         this.router.navigate(['/home']).then();
         return;
       }
+      const response = await this.service.signupAction(loginData);
+      if(response && response.error){
+        return
+      }
 
-      await this.service.signupAction(loginData);
+      this.router.navigate(['/home']).then();
     }
   }
 }

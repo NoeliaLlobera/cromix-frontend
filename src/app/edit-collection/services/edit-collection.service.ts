@@ -24,7 +24,6 @@ export class EditCollectionService {
   }
 
   async createCromo(cromo: CromoTypeDTO): Promise<CromoTypeDTO[]> {
-    console.log(cromo);
     await firstValueFrom(
       this.http.post<CromoTypeDTO>(`${CROMO_TYPES_ENDPOINTS.CREATE}`, cromo)
     );
@@ -32,7 +31,6 @@ export class EditCollectionService {
   }
 
   async updateCromo(cromo: CromoTypeDTO): Promise<CromoTypeDTO[]> {
-    console.log(cromo);
     await firstValueFrom(
       this.http.patch<CromoTypeDTO>(`${CROMO_TYPES_ENDPOINTS.UPDATE(cromo.id)}`, cromo)
     );
@@ -41,8 +39,17 @@ export class EditCollectionService {
 
   async deleteCromo(cromo_id: string, collection_id: string): Promise<CromoTypeDTO[]> {
     await firstValueFrom(
-      this.http.delete(`${CROMO_TYPES_ENDPOINTS.DELETE}/${cromo_id}`)
+      this.http.delete(`${CROMO_TYPES_ENDPOINTS.DELETE(cromo_id)}`)
     );
     return await this.getCromos(collection_id);
+  }
+
+  async updateCollection(collection: any) {
+    console.log(collection.collection_id);
+    await firstValueFrom(
+      this.http.patch<CollectionDTO>(`${COLLECTIONS_ENDPOINTS.UPDATE(collection.collection_id)}`, collection)
+    );
+    return await this.getCollectionInfo(collection.collection_id);
+
   }
 }
