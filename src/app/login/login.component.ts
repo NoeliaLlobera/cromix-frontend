@@ -6,13 +6,15 @@ import { IloginModel } from "./models/login.model";
 import { LoginService } from "./service/login.service";
 import { Store } from "@ngrx/store";
 import { GrowlService } from '../core/services/growl.service';
+import {LoaderComponent} from "../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-login',
   imports: [
     TranslatePipe,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    LoaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -28,6 +30,7 @@ export class LoginComponent {
   private readonly service: LoginService = inject(LoginService);
   private readonly router: Router = inject(Router);
   private readonly growlService: GrowlService = inject(GrowlService);
+  protected isLoading: boolean = false;
 
 
   constructor() {
@@ -54,18 +57,33 @@ export class LoginComponent {
     const loginData: IloginModel = this.form.value;
 
     if (this.mode === 'login') {
-      const login = await this.service.loginAction(loginData);
-      this.router.navigate(['/home']).then();
+      this.isLoading = true;
+      try {
+        const login = await this.service.loginAction(loginData);
+        this.isLoading = false;
+        this.router.navigate(['/home']).then();
+      } catch (e){
+        this.isLoading = false;
+      }
+
 
     } else if (this.mode === 'register') {
       if (loginData.password !== loginData.confirmPassword) {
         this.growlService.setGrowlMessage({ message: 'login.errors.pasword-match', type: 'danger' });
         this.router.navigate(['/home']).then();
+        this.isLoading = false;
         return;
       }
-      const response = await this.service.signupAction(loginData);
-      if(response && response.error){
-        return
+      this.isLoading = true;
+      try{
+        const response = await this.service.signupAction(loginData);
+        this.isLoading = false;
+        if(response && response.error){
+          this.isLoading = false;
+          return
+        }
+      }catch (e) {
+        this.isLoading = false;
       }
 
       this.router.navigate(['/home']).then();
